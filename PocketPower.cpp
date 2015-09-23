@@ -19,6 +19,7 @@
 #include "redstone/world/level/tile/NotGateTile.h"
 #include "redstone/world/level/tile/ButtonTile.h"
 #include "redstone/world/level/tile/PressurePlateTile.h"
+#include "redstone/world/level/tile/LeverTile.h"
 
 using namespace std;
 
@@ -27,6 +28,8 @@ MSHook(bool, TileTessellator$tessellateInWorld, TileTessellator* self, Tile* til
 	switch(tile->renderType) {
 	case 5:
 		return self->tessellateRedstoneInWorld((RedstoneTile*) tile, pos, data);
+	case 12:
+		return self->tessellateLeverInWorld((LeverTile*) tile, pos);
 	}
 
 	switch(tile->id) {
@@ -41,11 +44,12 @@ MSHook(void, Tile$initTiles) {
 	_Tile$initTiles();
 
 	Tile::redstoneDust = new RedstoneTile(55);
-	Tile::notGate_on = new NotGateTile(76, TextureUVCoordinateSet(0.5938, 0.3125, 0.625, 0.375));
-	Tile::notGate_off = new NotGateTile(75, TextureUVCoordinateSet(0.625, 0.3125, 0.6562, 0.375));
-	Tile::buttonStone = new ButtonTile(77, TextureUVCoordinateSet(0.5938, 0.0, 0.625, 0.0625), Tile::tiles[50]->material);
+	Tile::lever = new LeverTile(69);
 	Tile::plateStone = new PressurePlateTile(70, TextureUVCoordinateSet(0.5938, 0.0, 0.625, 0.0625), Tile::tiles[50]->material);
 	Tile::plateWood = new PressurePlateTile(72, TextureUVCoordinateSet(0.4375, 0.0625, 0.4687, 0.125), Tile::tiles[50]->material);
+	Tile::notGate_off = new NotGateTile(75, TextureUVCoordinateSet(0.625, 0.3125, 0.6562, 0.375));
+	Tile::notGate_on = new NotGateTile(76, TextureUVCoordinateSet(0.5938, 0.3125, 0.625, 0.375));
+	Tile::buttonStone = new ButtonTile(77, TextureUVCoordinateSet(0.5938, 0.0, 0.625, 0.0625), Tile::tiles[50]->material);
 }
 
 MSHook(bool, Item$useOn, Item* self, ItemInstance* item, Player* player, int x, int y, int z, signed char side, float xx, float yy, float zz) {

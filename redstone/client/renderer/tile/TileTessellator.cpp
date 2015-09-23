@@ -1,11 +1,14 @@
 #include "../../../../mcpe/client/renderer/tile/TileTessellator.h"
 #include "../../../../mcpe/client/renderer/renderer/Tessellator.h"
 #include "../../../../mcpe/client/renderer/texture/TextureUVCoordinateSet.h"
+#include "../../../../mcpe/world/phys/Vec3.h"
 #include "../../../../mcpe/world/level/TilePos.h"
 #include "../../../../mcpe/world/level/TileSource.h"
 #include "../../../world/level/tile/RedstoneTile.h"
 #include "../../../world/level/tile/NotGateTile.h"
+#include "../../../world/level/tile/LeverTile.h"
 
+#include <vector>
 
 bool TileTessellator::tessellateRedstoneInWorld(RedstoneTile* tile, const TilePos& pos, int data) {
 	int x = pos.x, y = pos.y, z = pos.z;
@@ -175,4 +178,135 @@ void TileTessellator::tessellateAngledNotGate(Tile* tile, double x, double y, do
 	tessellator->vertexUV(var41 + xRot, y + 0.0F, z - var47 + zRot, var15, var21);
 	tessellator->vertexUV(var39 + xRot, y + 0.0F, z - var47 + zRot, var19, var21);
 	tessellator->vertexUV(var39, y + 1.0F, z - var47, var19, var17);
+}
+
+bool TileTessellator::tessellateLeverInWorld(LeverTile* tile, const TilePos& pos) {
+	int x = pos.x, y = pos.y, z = pos.z;
+
+	int data = region->getData(x, y, z);
+	int rot = data & 7;
+	bool flag = (data & 8) > 0;
+
+	tile->getVisualShape(region, x, y, z, bounds, false);
+	tessellateBlockInWorld(Tile::tiles[4], pos);
+
+	tessellator->color(0xFFFFFF);
+
+	TextureUVCoordinateSet lever = tile->tex;
+
+	float f4 = lever.minU;
+	float f5 = lever.minV;
+	float f6 = lever.maxU;
+	float f7 = lever.maxV;
+	double f8 = 0.0625;
+	double f9 = 0.0625;
+	double f10 = 0.625;
+
+	Vec3 vec30 {-f8, 0.0, -f9};
+	Vec3 vec31 {f8, 0.0, -f9};
+	Vec3 vec32 {f8, 0.0, f9};
+
+	Vec3 vec33 {-f8, 0.0, f9};
+	Vec3 vec34 {-f8, f10, -f9};
+	Vec3 vec35 {f8, f10, -f9};
+	Vec3 vec36 {f8, f10, f9};
+	Vec3 vec37 {-f8, f10, f9};
+	std::vector<Vec3> avec3d = {vec30, vec31, vec32, vec33, vec34, vec35, vec36, vec37};
+
+	for(int i2 = 0; i2 < 8; i2++) {
+		if(flag) {
+			avec3d[i2].z -= 0.0625F;
+			avec3d[i2].rotateAroundX(PI * 2.0F / 9.0F);
+		} else {
+			avec3d[i2].z += 0.0625F;
+			avec3d[i2].rotateAroundX(-(PI * 2.0F / 9.0F));
+		}
+		if (rot == 0 || rot == 7) {
+			avec3d[i2].rotateAroundZ(PI);
+		}
+		if (rot == 6 || rot == 0) {
+			avec3d[i2].rotateAroundY((PI / 2.0D));
+		}
+
+		if (rot > 0 && rot < 5) {
+			avec3d[i2].y -= 0.37501;
+			avec3d[i2].rotateAroundX((PI / 2.0D));
+
+			if (rot == 4) avec3d[i2].rotateAroundY(0.0);
+
+			if (rot == 3) avec3d[i2].rotateAroundY(PI);
+
+			if (rot == 2) avec3d[i2].rotateAroundY((PI / 2.0D));
+
+			if (rot == 1) avec3d[i2].rotateAroundY(-(PI / 2.0D));
+
+			avec3d[i2].x += (float) x + 0.5F;
+			avec3d[i2].y += (float) y + 0.5F;
+			avec3d[i2].z += (float) z + 0.5F;
+		} else if (rot != 0 && rot != 7) {
+			avec3d[i2].x += (float) x + 0.5F;
+			avec3d[i2].y += (float) y + 0.125F;
+			avec3d[i2].z += (float) z + 0.5F;
+		} else {
+			avec3d[i2].x += (float) x + 0.5F;
+			avec3d[i2].y += (float) y + 0.875F;
+			avec3d[i2].z += (float) z + 0.5F;
+		}
+	}
+
+	Vec3 vec3d;
+	Vec3 vec3d1;
+	Vec3 vec3d2;
+	Vec3 vec3d3;
+
+	for(int j2 = 0; j2 < 6; j2++) {
+		if(j2 == 0) {
+			f4 = lever.getInterpolatedU(7.0);
+			f5 = lever.getInterpolatedV(6.0);
+			f6 = lever.getInterpolatedU(9.0);
+			f7 = lever.getInterpolatedV(8.0);
+		} else if(j2 == 2) {
+			f4 = lever.getInterpolatedU(7.0);
+			f5 = lever.getInterpolatedV(6.0);
+			f6 = lever.getInterpolatedU(9.0);
+			f7 = lever.maxV;
+		}
+
+		if(j2 == 0) {
+			vec3d = avec3d[0];
+			vec3d1 = avec3d[1];
+			vec3d2 = avec3d[2];
+			vec3d3 = avec3d[3];
+		} else if(j2 == 1) {
+			vec3d = avec3d[7];
+			vec3d1 = avec3d[6];
+			vec3d2 = avec3d[5];
+			vec3d3 = avec3d[4];
+		} else if(j2 == 2) {
+			vec3d = avec3d[1];
+			vec3d1 = avec3d[0];
+			vec3d2 = avec3d[4];
+			vec3d3 = avec3d[5];
+		} else if(j2 == 3) {
+			vec3d = avec3d[2];
+			vec3d1 = avec3d[1];
+			vec3d2 = avec3d[5];
+			vec3d3 = avec3d[6];
+		} else if(j2 == 4) {
+			vec3d = avec3d[3];
+			vec3d1 = avec3d[2];
+			vec3d2 = avec3d[6];
+			vec3d3 = avec3d[7];
+		} else if(j2 == 5) {
+			vec3d = avec3d[0];
+			vec3d1 = avec3d[3];
+			vec3d2 = avec3d[7];
+			vec3d3 = avec3d[4];
+		}
+		tessellator->vertexUV(vec3d.x, vec3d.y, vec3d.z, f4, f7);
+		tessellator->vertexUV(vec3d1.x, vec3d1.y, vec3d1.z, f6, f7);
+		tessellator->vertexUV(vec3d2.x, vec3d2.y, vec3d2.z, f6, f5);
+		tessellator->vertexUV(vec3d3.x, vec3d3.y, vec3d3.z, f4, f5);
+	}
+	return true;
 }

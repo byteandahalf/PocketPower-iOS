@@ -6,6 +6,7 @@ class Random;
 struct TextureUVCoordinateSet;
 class TileSource;
 struct Player;
+class Mob;
 
 class ButtonTile : public Tile {
 public:
@@ -19,7 +20,7 @@ public:
 	static void onPlace(ButtonTile*, TileSource*, int, int, int);
 	static void onRemove(ButtonTile*, TileSource*, int, int, int);
 	static void neighborChanged(ButtonTile*, TileSource*, int, int, int, int, int, int);
-	static int getPlacementDataValue(ButtonTile*, void*, int, int, int, signed char, float, float, float, int);
+	static int getPlacementDataValue(ButtonTile*, Mob*, int, int, int, signed char, float, float, float, int);
 	static bool use(ButtonTile*, Player*, int, int, int);
 	static void addCollisionShapes();
 	static int getSignal(ButtonTile*, TileSource*, int, int, int, int);

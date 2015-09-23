@@ -41,7 +41,7 @@ void ButtonTile::onPlace(ButtonTile* self, TileSource* region, int x, int y, int
 	region->scheduleBlockUpdate(x, y, z, self->id, 0);
 }
 
-int ButtonTile::getPlacementDataValue(ButtonTile* self, void* placer, int x, int y, int z, signed char side, float xx, float yy, float zz, int ii) {
+int ButtonTile::getPlacementDataValue(ButtonTile* self, Mob* placer, int x, int y, int z, signed char side, float xx, float yy, float zz, int ii) {
 	switch(side) {
 		case 0: return 6;
 		case 1: return 5;

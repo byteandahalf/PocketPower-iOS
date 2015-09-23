@@ -4,6 +4,7 @@
 struct TilePos;
 class RedstoneTile;
 class NotGateTile;
+class LeverTile;
 class Tile;
 class Tessellator;
 class TileSource;
@@ -19,6 +20,7 @@ public:
 	AABB bounds;
 
 	bool tessellateRedstoneInWorld(RedstoneTile*, const TilePos&, int);
+	bool tessellateLeverInWorld(LeverTile*, const TilePos&);
 	bool tessellateLitNotGateInWorld(NotGateTile*, const TilePos&, int);
 	void tessellateAngledNotGate(Tile*, double, double, double, double, double);
 	bool tessellateBlockInWorld(Tile*, const TilePos&);

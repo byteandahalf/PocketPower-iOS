@@ -49,4 +49,5 @@ public:
     static Tile* buttonStone;
     static Tile* plateWood;
     static Tile* plateStone;
+    static Tile* lever;
 };

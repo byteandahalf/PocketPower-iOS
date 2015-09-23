@@ -15,6 +15,7 @@ Tile* Tile::notGate_off;
 Tile* Tile::buttonStone;
 Tile* Tile::plateWood;
 Tile* Tile::plateStone;
+Tile* Tile::lever;
 
 
 Tile::Tile(int id, TextureUVCoordinateSet texture, Material* material) {

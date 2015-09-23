@@ -1,10 +1,5 @@
 #pragma once
-#include <Forklift/Forklift.h>
-class TileSource;
+#include "../Mob.h"
 
-#define PLAYER_FILLER FLArch(48, 48, 72)
-
-struct Player {
-	char filler[PLAYER_FILLER];
-	TileSource& region;
+struct Player : public Mob {
 };
