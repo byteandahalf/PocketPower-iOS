@@ -187,7 +187,7 @@ bool TileTessellator::tessellateLeverInWorld(LeverTile* tile, const TilePos& pos
 	int rot = data & 7;
 	bool flag = (data & 8) > 0;
 
-	tile->getVisualShape(region, x, y, z, bounds, false);
+	tile->getVisualShapeInWorld(tile, region, x, y, z, bounds, false);
 	tessellateBlockInWorld(Tile::tiles[4], pos);
 
 	tessellator->color(0xFFFFFF);
@@ -198,20 +198,19 @@ bool TileTessellator::tessellateLeverInWorld(LeverTile* tile, const TilePos& pos
 	float f5 = lever.minV;
 	float f6 = lever.maxU;
 	float f7 = lever.maxV;
-	double f8 = 0.0625;
-	double f9 = 0.0625;
-	double f10 = 0.625;
+	float f8 = 0.0625;
+	float f9 = 0.0625;
+	float f10 = 0.625;
 
+	Vec3 avec3d[8];
 	Vec3 vec30 {-f8, 0.0, -f9};
 	Vec3 vec31 {f8, 0.0, -f9};
 	Vec3 vec32 {f8, 0.0, f9};
-
 	Vec3 vec33 {-f8, 0.0, f9};
 	Vec3 vec34 {-f8, f10, -f9};
 	Vec3 vec35 {f8, f10, -f9};
 	Vec3 vec36 {f8, f10, f9};
 	Vec3 vec37 {-f8, f10, f9};
-	std::vector<Vec3> avec3d = {vec30, vec31, vec32, vec33, vec34, vec35, vec36, vec37};
 
 	for(int i2 = 0; i2 < 8; i2++) {
 		if(flag) {
@@ -225,20 +224,20 @@ bool TileTessellator::tessellateLeverInWorld(LeverTile* tile, const TilePos& pos
 			avec3d[i2].rotateAroundZ(PI);
 		}
 		if (rot == 6 || rot == 0) {
-			avec3d[i2].rotateAroundY((PI / 2.0D));
+			avec3d[i2].rotateAroundY((PI / 2.0));
 		}
 
 		if (rot > 0 && rot < 5) {
 			avec3d[i2].y -= 0.37501;
-			avec3d[i2].rotateAroundX((PI / 2.0D));
+			avec3d[i2].rotateAroundX((PI / 2.0));
 
 			if (rot == 4) avec3d[i2].rotateAroundY(0.0);
 
 			if (rot == 3) avec3d[i2].rotateAroundY(PI);
 
-			if (rot == 2) avec3d[i2].rotateAroundY((PI / 2.0D));
+			if (rot == 2) avec3d[i2].rotateAroundY((PI / 2.0));
 
-			if (rot == 1) avec3d[i2].rotateAroundY(-(PI / 2.0D));
+			if (rot == 1) avec3d[i2].rotateAroundY(-(PI / 2.0));
 
 			avec3d[i2].x += (float) x + 0.5F;
 			avec3d[i2].y += (float) y + 0.5F;

@@ -77,7 +77,7 @@ int LeverTile::getSignal(LeverTile* self, TileSource* region, int x, int y, int 
 	return 0;
 }
 
-const AABB& LeverTile::getVisualShape(LeverTile* self, TileSource* region, int x, int y, int z, AABB& aabb, bool b) {
+const AABB& LeverTile::getVisualShapeInWorld(LeverTile* self, TileSource* region, int x, int y, int z, AABB& aabb, bool b) {
 	float f = 0.25F;
 	float f1 = 0.1875F;
 	float f2 = 0.1875F;
@@ -146,7 +146,7 @@ void LeverTile::neighborChanged(LeverTile* self, TileSource* region, int x, int 
 	}*/
 }
 
-void LeverTile::tick(TileSource* region, int x, int y, int z, Random* random) {}
+void LeverTile::tick(LeverTile* self, TileSource* region, int x, int y, int z, Random* random) {}
 
 void LeverTile::onPlace(LeverTile* self, TileSource* region, int x, int y, int z) {
 	region->scheduleBlockUpdate(x, y, z, self->id, 0);

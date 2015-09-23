@@ -22,7 +22,7 @@ public:
     static bool canSurvive(LeverTile*, TileSource*, int, int, int);
     static int getSignal(LeverTile*, TileSource*, int, int, int, int);
     static int getDirectSignal(LeverTile*, TileSource*, int, int, int, int);
-    static const AABB& getVisualShape(LeverTile*, TileSource*, int, int, int, AABB&, bool);
+    static const AABB& getVisualShapeInWorld(LeverTile*, TileSource*, int, int, int, AABB&, bool);
     static void addCollisionShapes();
 
     void initVtable();
