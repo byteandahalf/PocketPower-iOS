@@ -202,7 +202,6 @@ bool TileTessellator::tessellateLeverInWorld(LeverTile* tile, const TilePos& pos
 	float f9 = 0.0625;
 	float f10 = 0.625;
 
-	Vec3 avec3d[8];
 	Vec3 vec30 {-f8, 0.0, -f9};
 	Vec3 vec31 {f8, 0.0, -f9};
 	Vec3 vec32 {f8, 0.0, f9};
@@ -211,6 +210,7 @@ bool TileTessellator::tessellateLeverInWorld(LeverTile* tile, const TilePos& pos
 	Vec3 vec35 {f8, f10, -f9};
 	Vec3 vec36 {f8, f10, f9};
 	Vec3 vec37 {-f8, f10, f9};
+	Vec3 avec3d[8] = {vec30, vec31, vec32, vec33, vec34, vec35, vec36, vec37};
 
 	for(int i2 = 0; i2 < 8; i2++) {
 		if(flag) {

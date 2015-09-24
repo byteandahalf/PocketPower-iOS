@@ -55,6 +55,7 @@ bool LeverTile::use(LeverTile* self, Player* player, int x, int y, int z) {
 	else if(rot == 4) player->region.updateNeighborsAt(x, y, z + 1, self->id);
 	else if(rot == 5) player->region.updateNeighborsAt(x, y - 1, z, self->id);
 	else if(rot == 7) player->region.updateNeighborsAt(x, y + 1, z, self->id);
+	return true;
 }
 
 int LeverTile::getDirectSignal(LeverTile* self, TileSource* region, int x, int y, int z, int side) {
@@ -119,6 +120,7 @@ bool LeverTile::mayPlace(LeverTile* self, TileSource* region, int x, int y, int 
 	case 5:
 		return solid[region->getTile(x - 1, y, z).id];
 	}
+	return true;
 }
 
 bool LeverTile::canSurvive(LeverTile* self, TileSource* region, int x, int y, int z) {

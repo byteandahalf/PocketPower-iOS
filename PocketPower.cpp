@@ -78,6 +78,7 @@ MSHook(void, Item$initCreativeItems) {
 	Item::addCreativeItem(Item::items[70], 0);
 	Item::addCreativeItem(Item::items[72], 0);
 	Item::addCreativeItem(Item::items[77], 0);
+	Item::addCreativeItem(Item::items[69], 0);
 };
 
 MSInitialize {
