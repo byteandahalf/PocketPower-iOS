@@ -23,7 +23,6 @@ public:
     static void onPlace(PressurePlateTile*, TileSource*, int, int, int);
     static void tick(PressurePlateTile*, TileSource*, int, int, int, Random*);
     static const AABB& getVisualShapeInWorld(PressurePlateTile*, TileSource*, int, int, int, AABB&, bool);
-    static const AABB& getVisualShape(PressurePlateTile*, unsigned char, AABB&, bool);
     static int getSignal(PressurePlateTile*, TileSource*, int, int, int, int);
     static int getDirectSignal(PressurePlateTile*, TileSource*, int, int, int, int);
     static bool isSignalSource(PressurePlateTile*);

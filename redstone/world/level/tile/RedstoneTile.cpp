@@ -216,7 +216,7 @@ bool RedstoneTile::canRedstoneConnect(TileSource* region, int x, int y, int z, i
     if(id == this->id) return true;
     if(id == 0) return false;
     bool (*isSignalSource)(Tile*) = (bool (*)(Tile*)) tiles[id]->vtable[VT_TILE_ISSOURCE];
-    return isSignalSource(tiles[id]);
+    return isSignalSource(tiles[id]) && side != -1;
 }
 
 bool RedstoneTile::isSignalSource(RedstoneTile* tile) {

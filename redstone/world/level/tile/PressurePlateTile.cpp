@@ -25,7 +25,6 @@ void PressurePlateTile::initVtable() {
 	vtable[VT_TILE_ISSOURCE] = (void*) &isSignalSource;
 	vtable[VT_TILE_REMOVE] = (void*) &onRemove;
 	vtable[VT_TILE_ONPLACE] = (void*) &onPlace;
-	vtable[VT_TILE_GETSHAPE] = (void*) &getVisualShape;
 	vtable[VT_TILE_GETSHAPEWORLD] = (void*) &getVisualShapeInWorld;
 	vtable[VT_TILE_ADDCOLLISION] = (void*) &addCollisionShapes;
 	vtable[VT_TILE_MAYPLACE] = (void*) &mayPlace;
@@ -126,11 +125,6 @@ const AABB& PressurePlateTile::getVisualShapeInWorld(PressurePlateTile* self, Ti
 	if(region->getData(x, y, z) != 0)
 		aabb.set(0.0625F, 0.0F, 0.0625F, 1.0F - 0.0625F, 0.03125F, 1.0F - 0.0625F);
 
-	return aabb;
-}
-
-const AABB& PressurePlateTile::getVisualShape(PressurePlateTile* self, unsigned char data, AABB& aabb, bool b) {
-	aabb.set(0.0F, 0.5F - 0.125F, 0.0F, 1.0F, 0.5F + 0.125F, 1.0F);
 	return aabb;
 }
 
