@@ -82,7 +82,7 @@ bool PressurePlateTile::_isMob(Entity* entity) {
 }
 
 bool PressurePlateTile::_listContainsMob(EntityList& list) {
-	for(int i = 0; i < list.size(); i++) {
+	for(int i = 0; i < (int) list.size(); i++) {
 		if(_isMob(list[i])) return true;
 	}
 	return false;

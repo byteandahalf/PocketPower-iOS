@@ -47,7 +47,10 @@ public:
     static Tile* notGate_on;
     static Tile* notGate_off;
     static Tile* buttonStone;
+    static Tile* buttonWood;
     static Tile* plateWood;
     static Tile* plateStone;
     static Tile* lever;
+    static Tile* lamp_off;
+    static Tile* lamp_on;
 };

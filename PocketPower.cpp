@@ -6,6 +6,7 @@
 #include "mcpe/client/renderer/tile/TileTessellator.h"
 #include "mcpe/client/renderer/renderer/Tessellator.h"
 #include "mcpe/world/level/tile/Tile.h"
+#include "mcpe/world/level/tile/TntTile.h"
 #include "mcpe/world/level/TileSource.h"
 #include "mcpe/world/level/TileTickingQueue.h"
 #include "mcpe/world/level/TilePos.h"
@@ -20,6 +21,7 @@
 #include "redstone/world/level/tile/ButtonTile.h"
 #include "redstone/world/level/tile/PressurePlateTile.h"
 #include "redstone/world/level/tile/LeverTile.h"
+#include "redstone/world/level/tile/LampTile.h"
 
 using namespace std;
 
@@ -43,6 +45,8 @@ MSHook(bool, TileTessellator$tessellateInWorld, TileTessellator* self, Tile* til
 MSHook(void, Tile$initTiles) {
 	_Tile$initTiles();
 
+	TntTile::initVtable((TntTile*) Tile::tiles[46]);
+
 	Tile::redstoneDust = new RedstoneTile(55);
 	Tile::lever = new LeverTile(69);
 	Tile::plateStone = new PressurePlateTile(70, TextureUVCoordinateSet(0.5938, 0.0, 0.625, 0.0625), Tile::tiles[50]->material);
@@ -50,6 +54,9 @@ MSHook(void, Tile$initTiles) {
 	Tile::notGate_off = new NotGateTile(75, TextureUVCoordinateSet(0.625, 0.3125, 0.6562, 0.375));
 	Tile::notGate_on = new NotGateTile(76, TextureUVCoordinateSet(0.5938, 0.3125, 0.625, 0.375));
 	Tile::buttonStone = new ButtonTile(77, TextureUVCoordinateSet(0.5938, 0.0, 0.625, 0.0625), Tile::tiles[50]->material);
+	Tile::buttonWood = new ButtonTile(143, TextureUVCoordinateSet(0.4375, 0.0625, 0.4687, 0.125), Tile::tiles[50]->material);
+	Tile::lamp_off = new LampTile(123, TextureUVCoordinateSet(0.25, 0.5, 0.2812, 0.5625));
+	Tile::lamp_on = new LampTile(124, TextureUVCoordinateSet(0.2813, 0.5, 0.3125, 0.5625));
 }
 
 MSHook(bool, Item$useOn, Item* self, ItemInstance* item, Player* player, int x, int y, int z, signed char side, float xx, float yy, float zz) {
@@ -78,8 +85,11 @@ MSHook(void, Item$initCreativeItems) {
 	Item::addCreativeItem(Item::items[70], 0);
 	Item::addCreativeItem(Item::items[72], 0);
 	Item::addCreativeItem(Item::items[77], 0);
+	Item::addCreativeItem(Item::items[143], 0);
 	Item::addCreativeItem(Item::items[69], 0);
+	Item::addCreativeItem(Item::items[123], 0);
 };
+
 
 MSInitialize {
 	FLHookSymbol(Tile::_vtable, TILE_VTABLE);

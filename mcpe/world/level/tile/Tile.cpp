@@ -13,9 +13,12 @@ Tile* Tile::redstoneDust;
 Tile* Tile::notGate_on;
 Tile* Tile::notGate_off;
 Tile* Tile::buttonStone;
+Tile* Tile::buttonWood;
 Tile* Tile::plateWood;
 Tile* Tile::plateStone;
 Tile* Tile::lever;
+Tile* Tile::lamp_off;
+Tile* Tile::lamp_on;
 
 
 Tile::Tile(int id, TextureUVCoordinateSet texture, Material* material) {
