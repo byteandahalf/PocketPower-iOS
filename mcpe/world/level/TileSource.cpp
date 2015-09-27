@@ -59,7 +59,7 @@ int TileSource::getStrongestIndirectPower(int x, int y, int z) {
 
 int TileSource::getIndirectPowerLevelTo(int x, int y, int z, int side) {
     int id = getTile(x, y, z).id;
-    if(Tile::solid[id]) return getBlockPowerInput(x, y, z);
+    if(Tile::solid[id] && id != 152) return getBlockPowerInput(x, y, z);
     if(id == 0) return 0;
 
     int (*getDirectSignal)(Tile*, TileSource*, int, int, int, int) = (int (*)(Tile*, TileSource*, int, int, int, int)) Tile::tiles[id]->vtable[VT_TILE_GETDIRECT];

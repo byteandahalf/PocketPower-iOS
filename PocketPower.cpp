@@ -22,6 +22,7 @@
 #include "redstone/world/level/tile/PressurePlateTile.h"
 #include "redstone/world/level/tile/LeverTile.h"
 #include "redstone/world/level/tile/LampTile.h"
+#include "redstone/world/level/tile/RedstoneBlockTile.h"
 
 using namespace std;
 
@@ -46,6 +47,7 @@ MSHook(void, Tile$initTiles) {
 	_Tile$initTiles();
 
 	TntTile::initVtable((TntTile*) Tile::tiles[46]);
+	((RedstoneBlockTile*) Tile::tiles[152])->initVtable();
 
 	Tile::redstoneDust = new RedstoneTile(55);
 	Tile::lever = new LeverTile(69);
