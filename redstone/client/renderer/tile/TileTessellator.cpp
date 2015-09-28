@@ -7,6 +7,7 @@
 #include "../../../world/level/tile/RedstoneTile.h"
 #include "../../../world/level/tile/NotGateTile.h"
 #include "../../../world/level/tile/LeverTile.h"
+#include "../../../world/level/tile/RepeaterTile.h"
 
 #include <vector>
 
@@ -308,4 +309,52 @@ bool TileTessellator::tessellateLeverInWorld(LeverTile* tile, const TilePos& pos
 		tessellator->vertexUV(vec3d3.x, vec3d3.y, vec3d3.z, f4, f5);
 	}
 	return true;
+}
+
+
+bool TileTessellator::tessellateRepeaterInWorld(RepeaterTile* tile, const TilePos& pos, int ass) {
+    int x = pos.x, y = pos.y, z = pos.z;
+    int data = region->getData(x, y, z);
+    int rotation = data & 3;
+    int delay = (data & 12) >> 2;
+
+    tessellator->color(0xFFFFFF);
+
+    Tile* torch = (tile->powered)? Tile::tiles[76] : Tile::tiles[75];
+
+    double var9 = -0.1875F;
+    double var12 = 0.0F;
+    double var14 = 0.0F;
+    double var16 = 0.0F;
+    double var18 = 0.0F;
+
+    switch(rotation) {
+    case 0:
+	rotTop = 0;
+	var18 = -0.3125F;
+	var14 = tile->torchOffset[delay];
+	break;
+    case 1:
+	rotTop = 1;
+	var16 = 0.3125F;
+	var12 = -tile->torchOffset[delay];
+	break;
+    case 2:
+	rotTop = 3;
+	var18 = 0.3125F;
+	var14 = -tile->torchOffset[delay];
+	break;
+    case 3:
+	rotTop = 2;
+	var16 = -0.3125F;
+	var12 = tile->torchOffset[delay];
+    }
+
+    tessellateAngledNotGate(torch, x + var12, y + var9, z + var14, 0.0F, 0.0F);
+    tessellateAngledNotGate(torch, x + var16, y + var9, z + var18, 0.0F, 0.0F);
+
+    bounds.set(0.0F, 0.0F, 0.0F, 1.0F, 0.125F, 1.0F);
+    tessellateBlockInWorld(tile, pos);
+
+    return true;
 }

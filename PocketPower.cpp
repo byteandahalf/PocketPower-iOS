@@ -16,6 +16,8 @@
 #include "mcpe/CommonTypes.h"
 #include "mcpe/world/Facing.h"
 
+#include "redstone/world/item/RepeaterItem.h"
+
 #include "redstone/world/level/tile/RedstoneTile.h"
 #include "redstone/world/level/tile/NotGateTile.h"
 #include "redstone/world/level/tile/ButtonTile.h"
@@ -23,6 +25,7 @@
 #include "redstone/world/level/tile/LeverTile.h"
 #include "redstone/world/level/tile/LampTile.h"
 #include "redstone/world/level/tile/RedstoneBlockTile.h"
+#include "redstone/world/level/tile/RepeaterTile.h"
 
 using namespace std;
 
@@ -33,6 +36,8 @@ MSHook(bool, TileTessellator$tessellateInWorld, TileTessellator* self, Tile* til
 		return self->tessellateRedstoneInWorld((RedstoneTile*) tile, pos, data);
 	case 12:
 		return self->tessellateLeverInWorld((LeverTile*) tile, pos);
+	case 15:
+		return self->tessellateRepeaterInWorld((RepeaterTile*) tile, pos, data);
 	}
 
 	switch(tile->id) {
@@ -59,6 +64,15 @@ MSHook(void, Tile$initTiles) {
 	Tile::buttonWood = new ButtonTile(143, TextureUVCoordinateSet(0.4375, 0.0625, 0.4687, 0.125), Tile::tiles[50]->material);
 	Tile::lamp_off = new LampTile(123, TextureUVCoordinateSet(0.25, 0.5, 0.2812, 0.5625));
 	Tile::lamp_on = new LampTile(124, TextureUVCoordinateSet(0.2813, 0.5, 0.3125, 0.5625));
+	Tile::diode_off = new RepeaterTile(93, TextureUVCoordinateSet(0.9063, 0.4375, 0.9375, 0.5), false);
+
+Tile::diode_on = new RepeaterTile(94, TextureUVCoordinateSet(0.9375, 0.4375, 0.9687, 0.5), true);
+}
+
+MSHook(void, Item$initItems) {
+    _Item$initItems();
+
+    Item::repeater = new RepeaterItem(356);
 }
 
 MSHook(bool, Item$useOn, Item* self, ItemInstance* item, Player* player, int x, int y, int z, signed char side, float xx, float yy, float zz) {
@@ -72,7 +86,7 @@ MSHook(bool, Item$useOn, Item* self, ItemInstance* item, Player* player, int x, 
 MSHook(void, Item$initCreativeItems) {
 	for(int i = 256; i < 512; i++) {
 		if(!Item::items[i]) continue;
-		if(Item::items[i]->creativeTab == 4)
+		if(Item::items[i]->creativeTab == 4 && i != 356)
 		    Item::items[i]->creativeTab = 3;
 	}
 	Tile::tiles[66]->creativeTab = 4;
@@ -87,6 +101,7 @@ MSHook(void, Item$initCreativeItems) {
 	Item::addCreativeItem(Item::items[70], 0);
 	Item::addCreativeItem(Item::items[72], 0);
 	Item::addCreativeItem(Item::items[77], 0);
+	Item::addCreativeItem(Item::items[356], 0);
 	Item::addCreativeItem(Item::items[143], 0);
 	Item::addCreativeItem(Item::items[69], 0);
 	Item::addCreativeItem(Item::items[123], 0);
@@ -114,5 +129,6 @@ MSInitialize {
 	FLHookFunction(TILETESS_TESS, MSHake(TileTessellator$tessellateInWorld));
 	FLHookFunction(TILE_INITTILES, MSHake(Tile$initTiles));
 	FLHookFunction(ITEM_USEON, MSHake(Item$useOn));
+	FLHookFunction(ITEM_INITITEMS, MSHake(Item$initItems));
 	FLHookFunction(ITEM_INITCREATIVE, MSHake(Item$initCreativeItems));
 }

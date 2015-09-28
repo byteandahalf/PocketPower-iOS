@@ -10,6 +10,8 @@ public:
         static Item** items;
         static std::vector<ItemInstance>* creativeList;
 
+        static Item* repeater;
+
         Item(int);
 
         static void addCreativeItem(Item*, short);

@@ -53,4 +53,6 @@ public:
     static Tile* lever;
     static Tile* lamp_off;
     static Tile* lamp_on;
+    static Tile* diode_off;
+    static Tile* diode_on;
 };

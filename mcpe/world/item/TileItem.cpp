@@ -1,7 +1,8 @@
 #include "TileItem.h"
 #include "../level/tile/Tile.h"
+#include "../../../addresses.h"
 
 TileItem::TileItem(int id, Tile* parent) : Item(id) {
-    vtable = items[50]->vtable;
+    memcpy(vtable, items[50]->vtable, VT_ITEM_SIZE);
     parentId = parent->id;
 }
