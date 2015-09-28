@@ -7,12 +7,6 @@
 #include "../../../addresses.h"
 
 RepeaterItem::RepeaterItem(int itemId) : Item(itemId) {
-    // some shitty ass code, but if it ain't broke don't fix it
-    void** backup = vtable;
-    memcpy(this->atlas, items[318]->atlas, 24);
-    vtable = backup;
-    id = itemId;
-
     creativeTab = 4;
     icon = TextureUVCoordinateSet(0.0625F, 0.2188F, 0.0937F, 0.25F);
 

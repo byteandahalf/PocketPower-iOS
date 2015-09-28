@@ -65,8 +65,7 @@ MSHook(void, Tile$initTiles) {
 	Tile::lamp_off = new LampTile(123, TextureUVCoordinateSet(0.25, 0.5, 0.2812, 0.5625));
 	Tile::lamp_on = new LampTile(124, TextureUVCoordinateSet(0.2813, 0.5, 0.3125, 0.5625));
 	Tile::diode_off = new RepeaterTile(93, TextureUVCoordinateSet(0.9063, 0.4375, 0.9375, 0.5), false);
-
-Tile::diode_on = new RepeaterTile(94, TextureUVCoordinateSet(0.9375, 0.4375, 0.9687, 0.5), true);
+	Tile::diode_on = new RepeaterTile(94, TextureUVCoordinateSet(0.9375, 0.4375, 0.9687, 0.5), true);
 }
 
 MSHook(void, Item$initItems) {
