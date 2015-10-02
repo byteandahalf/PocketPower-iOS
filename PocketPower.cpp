@@ -47,7 +47,7 @@ MSHook(bool, TileTessellator$tessellateInWorld, TileTessellator* self, Tile* til
 	switch(tile->id) {
 	case 29:
 	case 33:
-		return self->tessellatePistonBaseInWorld((PistonBaseTile*) tile, pos, true);
+		return self->tessellatePistonBaseInWorld((PistonBaseTile*) tile, pos, false);
 	case 76:
 		return self->tessellateLitNotGateInWorld((NotGateTile*) tile, pos, data);
 	}
