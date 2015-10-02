@@ -154,6 +154,8 @@ bool PistonBaseTile::hasPower(TileSource* region, int x, int y, int z, int rotat
 		region->getIndirectPowerOutput(x - 1, y + 1, z, 4) ||
 		region->getIndirectPowerOutput(x + 1, y + 1, z, 5))
 			return true;
+
+	return false;
 }
 
 int PistonBaseTile::getPlacementDataValue(PistonBaseTile* self, Mob* player, int x, int y, int z, signed char side) {
