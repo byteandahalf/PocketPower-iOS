@@ -21,7 +21,8 @@
 #include "redstone/world/level/tile/RedstoneTile.h"
 #include "redstone/world/level/tile/NotGateTile.h"
 #include "redstone/world/level/tile/ButtonTile.h"
-#include "redstone/world/level/tile/PressurePlateTile.h"
+#include "redstone/world/level/tile/LightPressurePlateTile.h"
+#include "redstone/world/level/tile/HeavyPressurePlateTile.h"
 #include "redstone/world/level/tile/LeverTile.h"
 #include "redstone/world/level/tile/LampTile.h"
 #include "redstone/world/level/tile/RedstoneBlockTile.h"
@@ -63,8 +64,10 @@ MSHook(void, Tile$initTiles) {
 
 	Tile::redstoneDust = new RedstoneTile(55);
 	Tile::lever = new LeverTile(69);
-	Tile::plateStone = new PressurePlateTile(70, TextureUVCoordinateSet(0.5938, 0.0, 0.625, 0.0625), Tile::tiles[50]->material);
-	Tile::plateWood = new PressurePlateTile(72, TextureUVCoordinateSet(0.4375, 0.0625, 0.4687, 0.125), Tile::tiles[50]->material);
+	Tile::plateStone = new LightPressurePlateTile(70, TextureUVCoordinateSet(0.5938, 0.0, 0.625, 0.0625), Tile::tiles[50]->material, LightPressurePlateTile::SENSITIVITY::MOBS);
+	Tile::plateWood = new LightPressurePlateTile(72, TextureUVCoordinateSet(0.4375, 0.0625, 0.4687, 0.125), Tile::tiles[50]->material, LightPressurePlateTile::SENSITIVITY::EVERYTHING);
+	Tile::plateGold = new HeavyPressurePlateTile(147, TextureUVCoordinateSet(0.2813F, 0.1875F, 0.3125F, 0.25F), Tile::tiles[50]->material, 15);
+	Tile::plateIron = new HeavyPressurePlateTile(148, TextureUVCoordinateSet(0.25F, 0.1875F, 0.2812F, 0.25F), Tile::tiles[50]->material, 150);
 	Tile::notGate_off = new NotGateTile(75, TextureUVCoordinateSet(0.625, 0.3125, 0.6562, 0.375));
 	Tile::notGate_on = new NotGateTile(76, TextureUVCoordinateSet(0.5938, 0.3125, 0.625, 0.375));
 	Tile::buttonStone = new ButtonTile(77, TextureUVCoordinateSet(0.5938, 0.0, 0.625, 0.0625), Tile::tiles[50]->material);
@@ -109,6 +112,8 @@ MSHook(void, Item$initCreativeItems) {
 	Item::addCreativeItem(Item::items[76], 0);
 	Item::addCreativeItem(Item::items[70], 0);
 	Item::addCreativeItem(Item::items[72], 0);
+	Item::addCreativeItem(Item::items[147], 0);
+	Item::addCreativeItem(Item::items[148], 0);
 	Item::addCreativeItem(Item::items[77], 0);
 	Item::addCreativeItem(Item::items[356], 0);
 	Item::addCreativeItem(Item::items[143], 0);

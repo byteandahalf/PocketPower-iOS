@@ -8,14 +8,14 @@
 #include "RedstoneColors.h"
 
 RedstoneTile::RedstoneTile(int id) : Tile(id, TextureUVCoordinateSet(0.125, 0.5, 0.1562, 0.5625), tiles[50]->material) {
+    init();
+
     solid[id] = false;
     lightBlock[id] = 0;
     hitbox.f5 = 0.0001F;
     renderType = 5;
     renderPass = 3;
     destroyTime = 0.0F;
-
-    init();
 
     initVtable();
 }
@@ -101,72 +101,66 @@ void RedstoneTile::onRemove(RedstoneTile* tile, TileSource* region, int x, int y
 
 void RedstoneTile::calculateChanges(TileSource* region, int x, int y, int z, int xx, int yy, int zz) {
     int oldPower = region->getData(x, y, z);
-    int newPower = 0;
+    int newPower = getStrongerSignal(region, xx, yy, zz, 0);
     wiresProvidePower = false;
-    bool hasPower = region->isBlockIndirectlyGettingPowered(x, y, z);
+    int receivedPower = region->getStrongestIndirectPower(x, y, z);
     wiresProvidePower = true;
-    if(hasPower)
-        newPower = 15;
-    else {
-        for(int i2 = 0; i2 < 4; i2++) {
-            int k2 = x;
-            int i3 = z;
-            if(i2 == 0) k2--;
-            if(i2 == 1) k2++;
-            if(i2 == 2) i3--;
-            if(i2 == 3) i3++;
-            if(k2 != xx || y != yy || i3 != zz)
-                newPower = getStrongerSignal(region, k2, y, i3, newPower);
-            if(solid[region->getTile(k2, y, i3).id] && !solid[region->getTile(x, y + 1, z).id]) {
-                if(k2 != xx || y + 1 != yy || i3 != zz)
-                    newPower = getStrongerSignal(region, k2, y + 1, i3, newPower);
-                continue;
-            }
-            if(!solid[region->getTile(k2, y, i3).id] && (k2 != xx || y - 1 != yy || i3 != zz))
-                newPower = getStrongerSignal(region, k2, y - 1, i3, newPower);
+    
+    if(receivedPower > 0 && receivedPower > newPower - 1)
+        newPower = receivedPower;
+        
+    int temp = 0;
+        
+    for(int it = 0; it < 4; ++it) {
+        int newX = x;
+        int newZ = z;
+        
+        if(it == 0)
+            newX = x - 1;
+        if(it == 1)
+            ++newX;
+        if(it == 2)
+            newZ = z - 1;
+        if(it == 3)
+            ++newZ;
+            
+        if(newX != xx || newZ != zz)
+            temp = getStrongerSignal(region, newX, y, newZ, temp);
+            
+        if(solid[region->getTile(newX, y, newZ).id] && !solid[region->getTile(x, y + 1, z).id]) {
+            if((newX != xx || newZ != zz) && y >= yy)
+                temp = getStrongerSignal(region, newX, y + 1, newZ, temp);
         }
-        if(newPower > 0) newPower--;
-        else newPower = 0;
+        else if(!solid[region->getTile(newX, y, newZ).id] && (newX != xx || newZ != zz) && y <= yy)
+            temp = getStrongerSignal(region, newX, y - 1, newZ, temp);
     }
+    
+    if(temp > newPower)
+        newPower = temp - 1;
+    else if(newPower > 0)
+        --newPower;
+    else
+        newPower = 0;
+        
+    if(receivedPower > newPower - 1)
+        newPower = receivedPower;
+        
     if(oldPower != newPower) {
-        region->setTileAndData(x, y, z, id, newPower, 3);
-        //region->fireTilesDirty(x, y, z, x, y, z);
-        for(int j2 = 0; j2 < 4; j2++) {
-            int l2 = x;
-            int j3 = z;
-            int k3 = y - 1;
-            if(j2 == 0) l2--;
-            if(j2 == 1) l2++;
-            if(j2 == 2) j3--;
-            if(j2 == 3) j3++;
-            if(solid[region->getTile(l2, y, j3).id]) k3 += 2;
-            int l3 = 0;
-            l3 = getStrongerSignal(region, l2, y, j3, -1);
-            newPower = region->getData(x, y, z);
-            if(newPower > 0) newPower--;
-            if(l3 >= 0 && l3 != newPower)
-                calculateChanges(region, l2, y, j3, x, y, z);
-            l3 = getStrongerSignal(region, l2, k3, j3, -1);
-            newPower = region->getData(x, y, z);
-            if(newPower > 0) newPower--;
-            if(l3 >= 0 && l3 != newPower)
-                calculateChanges(region, l2, k3, j3, x, y, z);
-        }
-        if(oldPower == 0 || newPower == 0) {
-            region->updateNeighborsAt(x, y, z, id);
-            region->updateNeighborsAt(x - 1, y, z, id);
-            region->updateNeighborsAt(x + 1, y, z, id);
-            region->updateNeighborsAt(x, y - 1, z, id);
-            region->updateNeighborsAt(x, y + 1, z, id);
-            region->updateNeighborsAt(x, y, z - 1, id);
-            region->updateNeighborsAt(x, y, z + 1, id);
-        }
+        region->setTileAndData(x, y, z, id, newPower, 2);
+        region->updateNeighborsAt(x, y, z, id);
+        region->updateNeighborsAt(x - 1, y, z, id);
+        region->updateNeighborsAt(x + 1, y, z, id);
+        region->updateNeighborsAt(x, y - 1, z, id);
+        region->updateNeighborsAt(x, y + 1, z, id);
+        region->updateNeighborsAt(x, y, z - 1, id);
+        region->updateNeighborsAt(x, y, z + 1, id);
     }
 }
 
-void RedstoneTile::recalculate(TileSource* region, int x, int y, int z) {
+void RedstoneWireTile::recalculate(TileSource* region, int x, int y, int z) {
     calculateChanges(region, x, y, z, x, y, z);
 }
+
 
 void RedstoneTile::neighborChanged(RedstoneTile* self, TileSource* region, int x, int y, int z, int xx, int yy, int zz) {
     self->recalculate(region, x, y, z);

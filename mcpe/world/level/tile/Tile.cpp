@@ -19,6 +19,8 @@ Tile* Tile::buttonStone;
 Tile* Tile::buttonWood;
 Tile* Tile::plateWood;
 Tile* Tile::plateStone;
+Tile* Tile::plateGold;
+Tile* Tile::plateIron;
 Tile* Tile::lever;
 Tile* Tile::lamp_off;
 Tile* Tile::lamp_on;

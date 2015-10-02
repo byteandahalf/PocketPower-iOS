@@ -51,6 +51,8 @@ public:
     static Tile* notGate_off;
     static Tile* buttonStone;
     static Tile* buttonWood;
+    static Tile* buttonGold;
+    static Tile* buttonIron;
     static Tile* plateWood;
     static Tile* plateStone;
     static Tile* lever;

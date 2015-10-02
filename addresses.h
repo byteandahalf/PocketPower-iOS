@@ -3,7 +3,7 @@
 #define Address(armv7, arm64) FLAddress(armv7, 0x00000000, arm64)
 
 
-#define VT_TILE_SIZE 83 * sizeof(void*)
+#define VT_TILE_SIZE (83 * sizeof(void*))
 #define VT_TILE_GETSHAPEWORLD 3
 #define VT_TILE_GETSHAPE 4
 #define VT_TILE_RENDERFACE 7
@@ -29,6 +29,12 @@
 #define VT_TILE_SURVIVES 61
 #define VT_TILE_EVENT 66
 #define VT_TILE_SETEMISSION 76
+
+#define VT_PLATETILE_SIZEADDR (4 * sizeof(void*))
+#define VT_PLATETILE_GETPOWER 83
+#define VT_PLATETILE_POWERDATA 84
+#define VT_PLATETILE_DATAPOWER 85
+#define VT_PLATETILE_TICKDELAY 86
 
 #define VT_ITEM_SIZE 47 * sizeof(void*)
 #define VT_ITEM_USEON 11
