@@ -402,7 +402,7 @@ bool TileTessellator::tessellatePistonBaseInWorld(PistonBaseTile* tile, const Ti
 	}
 
 	if(flag)
-		bounds = tile->getVisualShapeInWorld(region, x, y, z, bounds, false);
+		bounds = tile->getVisualShapeInWorld(tile, region, x, y, z, bounds, false);
 		
 	tessellateBlockInWorld(tile, pos);
 
@@ -425,7 +425,7 @@ bool TileTessellator::tessellatePistonArmInWorld(PistonArmTile* tile, const Tile
 	float var11 = powered ? 1.0F : 0.5F;
 	float var12 = powered ? 16.0F : 8.0F;
 
-	bounds = tile->getVisualShapeInWorld(region, x, y, z, bounds, false);
+	bounds = tile->getVisualShapeInWorld(tile, region, x, y, z, bounds, false);
 	switch(rotation) {
 	case 0:
 		rotEast = 3;
