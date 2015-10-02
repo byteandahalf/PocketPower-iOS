@@ -362,7 +362,7 @@ bool TileTessellator::tessellateRepeaterInWorld(RepeaterTile* tile, const TilePo
 }
 
 bool TileTessellator::tessellatePistonBaseInWorld(PistonBaseTile* tile, const TilePos& pos, bool faceAllSides) {
-	int x = pos.z, y = pos.y, z = pos.z;
+	int x = pos.x, y = pos.y, z = pos.z;
 	int data = region->getData(x, y, z);
 	bool flag = faceAllSides || (data & 8) != 0;
 	int rot = tile->getRotation(data);
