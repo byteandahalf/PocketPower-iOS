@@ -157,7 +157,7 @@ void RedstoneTile::calculateChanges(TileSource* region, int x, int y, int z, int
     }
 }
 
-void RedstoneWireTile::recalculate(TileSource* region, int x, int y, int z) {
+void RedstoneTile::recalculate(TileSource* region, int x, int y, int z) {
     calculateChanges(region, x, y, z, x, y, z);
 }
 

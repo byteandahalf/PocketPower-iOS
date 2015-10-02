@@ -34,7 +34,7 @@ int LightPressurePlateTile::getPower(LightPressurePlateTile* self, TileSource* r
 	return 0;
 }
 
-bool LightPressurePlateTile::_EntityisMob(const Entity* entity) {
+bool LightPressurePlateTile::_EntityisMob(Entity* entity) {
 	int (*getEntityTypeId)(Entity*) = (int (*)(Entity*)) entity->vtable[85];
 	int id = getEntityTypeId(entity);
 	return id != 64 && id != 80 && id != 81 && id != 82 && id != 66;

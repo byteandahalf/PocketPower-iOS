@@ -1,7 +1,6 @@
 #pragma once
 #include "../../../../mcpe/world/level/tile/Tile.h"
 class Entity;
-class AABB;
 class TileSource;
 class Random;
 #include <vector>
@@ -14,7 +13,7 @@ public:
 	static bool mayPlace(PressurePlateTile*, TileSource*, int, int, int);
 	static bool entityInside(PressurePlateTile*, TileSource*, int, int, int, Entity*);
 	static void tick(PressurePlateTile*, TileSource*, int, int, int, Random*);
-	static const AABB& getVisualShape(PressurePlateTile*, TileSource*, int, int, int, AABB&, bool);
+	static const AABB& getVisualShapeInWorld(PressurePlateTile*, TileSource*, int, int, int, AABB&, bool);
 	static int getSignal(PressurePlateTile*, TileSource*, int, int, int, int);
 	static int getDirectSignal(PressurePlateTile*, TileSource*, int, int, int, int);
 	static void addCollisionShapes();

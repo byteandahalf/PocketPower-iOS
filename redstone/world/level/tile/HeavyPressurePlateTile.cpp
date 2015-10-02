@@ -31,7 +31,7 @@ int HeavyPressurePlateTile::getTickDelay() {
 }
 
 int HeavyPressurePlateTile::getPower(HeavyPressurePlateTile* self, TileSource* region, int x, int y, int z) {
-	AABB aabb({ + 0.125F, y, z + 0.125F, (x + 1) - 0.125F, y + 0.25F, (z + 1) - 0.125F);
+	AABB aabb(x + 0.125F, y, z + 0.125F, (x + 1) - 0.125F, y + 0.25F, (z + 1) - 0.125F);
 	int smaller = std::min((int) region->getEntities(NULL, aabb).size(), self->weight);
 
 	if(smaller <= 0)

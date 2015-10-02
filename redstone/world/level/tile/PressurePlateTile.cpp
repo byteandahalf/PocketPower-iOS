@@ -41,6 +41,7 @@ bool PressurePlateTile::entityInside(PressurePlateTile* self, TileSource* region
 	int (*getPowerFromData)(PressurePlateTile*, int) = (int (*)(PressurePlateTile*, int)) self->vtable[VT_PLATETILE_POWERDATA];
 	int power = getPowerFromData(self, region->getData(x, y, z));
 	if(power == 0) self->setStateIfMobInteractsWithPlate(region, x, y, z, power);
+	return true;
 }
 
 bool PressurePlateTile::mayPlace(PressurePlateTile* self, TileSource* region, int x, int y, int z) {

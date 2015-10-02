@@ -20,7 +20,7 @@ private:
 	SENSITIVITY sensitivity;
 
 	bool _listIncludesMob(EntityList&);
-	bool _EntityisMob(const Entity*);
+	bool _EntityisMob(Entity*);
 
 	void initVtable();
 };
