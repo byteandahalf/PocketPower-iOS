@@ -11,7 +11,7 @@ PistonArmTile::PistonArmTile(int blockId) : Tile(blockId, TextureUVCoordinateSet
 	
 	destroyTime = 0.5F;
 	//setNameId("piston_extension");
-	renderType = 0;
+	renderType = 17;
 	creativeTab = 4;
 	Tile::solid[blockId] = false;
 	Tile::lightBlock[blockId] = 0;
