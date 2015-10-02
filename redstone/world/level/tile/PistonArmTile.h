@@ -1,5 +1,7 @@
 #pragma once
 #include "../../../../mcpe/world/level/tile/Tile.h"
+class TileSource;
+class Entity;
 
 class PistonArmTile : public Tile {
 public:

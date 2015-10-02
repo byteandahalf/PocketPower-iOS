@@ -16,9 +16,9 @@ PistonArmTile::PistonArmTile(int blockId) : Tile(blockId, TextureUVCoordinateSet
 	Tile::solid[blockId] = false;
 	Tile::lightBlock[blockId] = 0;
 
-	tex = getTextureUVCoordinateSet(0.6563F, 0.375F, 0.6875F, 0.4375F);
-	texture_sticky = getTextureUVCoordinateSet(0.625F, 0.375F, 0.6562F, 0.4375F);
-	texture_side = getTextureUVCoordinateSet(0.6875F, 0.375F, 0.7187F, 0.4375F);
+	tex = TextureUVCoordinateSet(0.6563F, 0.375F, 0.6875F, 0.4375F);
+	texture_sticky = TextureUVCoordinateSet(0.625F, 0.375F, 0.6562F, 0.4375F);
+	texture_side = TextureUVCoordinateSet(0.6875F, 0.375F, 0.7187F, 0.4375F);
 
 	initVtable();
 }

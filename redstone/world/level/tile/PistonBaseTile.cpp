@@ -14,11 +14,11 @@ PistonBaseTile::PistonBaseTile(int blockId, bool sticky) : Tile(blockId, Texture
 
 	if(!sticky) {
 		//setNameId("piston");
-		tex = getTextureUVCoordinateSet(0.6563F, 0.375F, 0.6875F, 0.4375F);
+		tex = TextureUVCoordinateSet(0.6563F, 0.375F, 0.6875F, 0.4375F);
 	}
 	else {
 		//setNameId("piston_sticky");
-		tex = getTextureUVCoordinateSet(0.625F, 0.375F, 0.6562F, 0.4375F);
+		tex = TextureUVCoordinateSet(0.625F, 0.375F, 0.6562F, 0.4375F);
 	}
 
 	this->sticky = sticky;
@@ -28,9 +28,9 @@ PistonBaseTile::PistonBaseTile(int blockId, bool sticky) : Tile(blockId, Texture
 	solid[blockId] = false;
 	lightBlock[blockId] = 0;
 
-	texture_inner = getTextureUVCoordinateSet(0.7188F, 0.375F, 0.75F, 0.4375F);
-	texture_bottom = getTextureUVCoordinateSet(0.75F, 0.375F, 0.7812F, 0.4375F);
-	texture_side = getTextureUVCoordinateSet(0.6875F, 0.375F, 0.7187F, 0.4375F);
+	texture_inner = TextureUVCoordinateSet(0.7188F, 0.375F, 0.75F, 0.4375F);
+	texture_bottom = TextureUVCoordinateSet(0.75F, 0.375F, 0.7812F, 0.4375F);
+	texture_side = TextureUVCoordinateSet(0.6875F, 0.375F, 0.7187F, 0.4375F);
 
 	initVtable();
 }
