@@ -40,9 +40,14 @@ MSHook(bool, TileTessellator$tessellateInWorld, TileTessellator* self, Tile* til
 		return self->tessellateLeverInWorld((LeverTile*) tile, pos);
 	case 15:
 		return self->tessellateRepeaterInWorld((RepeaterTile*) tile, pos, data);
+	case 17:
+		return self->tessellatePistonArmInWorld((PistonArmTile*) tile, pos, true);
 	}
 
 	switch(tile->id) {
+	case 29:
+	case 33:
+		return self->tessellatePistonBaseInWorld((PistonBaseTile*) tile, pos, true);
 	case 76:
 		return self->tessellateLitNotGateInWorld((NotGateTile*) tile, pos, data);
 	}
@@ -109,6 +114,8 @@ MSHook(void, Item$initCreativeItems) {
 	Item::addCreativeItem(Item::items[143], 0);
 	Item::addCreativeItem(Item::items[69], 0);
 	Item::addCreativeItem(Item::items[123], 0);
+	Item::addCreativeItem(Item::items[33], 0);
+	Item::addCreativeItem(Item::items[29], 0);
 };
 
 

@@ -8,6 +8,8 @@
 #include "../../../world/level/tile/NotGateTile.h"
 #include "../../../world/level/tile/LeverTile.h"
 #include "../../../world/level/tile/RepeaterTile.h"
+#include "../../../world/level/tile/PistonBaseTile.h"
+#include "../../../world/level/tile/PistonArmTile.h"
 
 #include <vector>
 
@@ -357,4 +359,183 @@ bool TileTessellator::tessellateRepeaterInWorld(RepeaterTile* tile, const TilePo
     tessellateBlockInWorld(tile, pos);
 
     return true;
+}
+
+bool TileTessellator::tessellatePistonBaseInWorld(PistonBaseTile* tile, const TilePos& pos, bool faceAllSides) {
+	int x = pos.z, y = pos.y, z = pos.z;
+	int data = region->getData(x, y, z);
+	bool flag = faceAllSides || (data & 8) != 0;
+	int rot = tile->getRotation(data);
+	bounds.set(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+
+	switch(rot) {
+	case 0:
+		rotEast = 3;
+		rotWest = 3;
+		rotSouth = 3;
+		rotNorth = 3;
+		break;
+	case 1:
+		break;
+	case 2:
+		rotSouth = 1;
+		rotNorth = 2;
+		break;
+	case 3:
+		rotSouth = 2;
+		rotNorth = 1;
+		rotTop = 3;
+		rotBottom = 3;
+		break;
+	case 4:
+		rotEast = 1;
+		rotWest = 2;
+		rotTop = 2;
+		rotBottom = 1;
+		break;
+	case 5:
+		rotEast = 2;
+		rotWest = 1;
+		rotTop = 1;
+		rotBottom = 2;
+		break;
+	}
+
+	if(flag)
+		bounds = tile->getVisualShapeInWorld(region, x, y, z, bounds, false);
+		
+	tessellateBlockInWorld(tile, pos);
+
+	rotEast = 0;
+	rotWest = 0;
+	rotSouth = 0;
+	rotNorth = 0;
+	rotTop = 0;
+	rotBottom = 0;
+	return true;
+}
+
+bool TileTessellator::tessellatePistonArmInWorld(PistonArmTile* tile, const TilePos& pos, bool powered) {
+	int x = pos.x, y = pos.y, z = pos.z;
+	int data = region->getData(x, y, z);
+	int rotation = PistonArmTile::getRotation(data);
+	float var8 = 0.25F;
+	float var9 = 0.375F;
+	float var10 = 0.625F;
+	float var11 = powered ? 1.0F : 0.5F;
+	float var12 = powered ? 16.0F : 8.0F;
+
+	bounds = tile->getVisualShapeInWorld(region, x, y, z, bounds, false);
+	switch(rotation) {
+	case 0:
+		rotEast = 3;
+		rotWest = 3;
+		rotSouth = 3;
+		rotNorth = 3;
+		tessellateBlockInWorld(tile, pos);
+		tessellatePistonRodUD(tile, x + 0.375F, x + 0.625F, y + 0.25F, y + 0.25F + var11, z + 0.625F, z + 0.625F, 0.8F, var12);
+		tessellatePistonRodUD(tile, x + 0.625F, x + 0.375F, y + 0.25F, y + 0.25F + var11, z + 0.375F, z + 0.375F, 0.8F, var12);
+		tessellatePistonRodUD(tile, x + 0.375F, x + 0.375F, y + 0.25F, y + 0.25F + var11, z + 0.375F, z + 0.625F, 0.6F, var12);
+		tessellatePistonRodUD(tile, x + 0.625F, x + 0.625F, y + 0.25F, y + 0.25F + var11, z + 0.625F, z + 0.375F, 0.6F, var12);
+		break;
+	case 1:
+		tessellateBlockInWorld(tile, pos);
+		tessellatePistonRodUD(tile, x + 0.375F, x + 0.625F, y - 0.25F + 1.0F - var11, y - 0.25F + 1.0F, z + 0.625F, z + 0.625F, 0.8F, var12);
+		tessellatePistonRodUD(tile, x + 0.625F, x + 0.375F, y - 0.25F + 1.0F - var11, y - 0.25F + 1.0F, z + 0.375F, z + 0.375F, 0.8F, var12);
+		tessellatePistonRodUD(tile, x + 0.375F, x + 0.375F, y - 0.25F + 1.0F - var11, y - 0.25F + 1.0F, z + 0.375F, z + 0.625F, 0.6F, var12);
+		tessellatePistonRodUD(tile, x + 0.625F, x + 0.625F, y - 0.25F + 1.0F - var11, y - 0.25F + 1.0F, z + 0.625F, z + 0.375F, 0.6F, var12);
+		break;
+	case 2:
+		rotSouth = 1;
+		rotNorth = 2;
+		tessellateBlockInWorld(tile, pos);
+		tessellatePistonRodSN(tile, x + 0.375F, x + 0.375F, y + 0.625F, y + 0.375F, z + 0.25F, z + 0.25F + var11, 0.6F, var12);
+		tessellatePistonRodSN(tile, x + 0.625F, x + 0.625F, y + 0.375F, y + 0.625F, z + 0.25F, z + 0.25F + var11, 0.6F, var12);
+		tessellatePistonRodSN(tile, x + 0.375F, x + 0.625F, y + 0.375F, y + 0.375F, z + 0.25F, z + 0.25F + var11, 0.5F, var12);
+		tessellatePistonRodSN(tile, x + 0.625F, x + 0.375F, y + 0.625F, y + 0.625F, z + 0.25F, z + 0.25F + var11, 1.0F, var12);
+		break;
+	case 3:
+		rotSouth = 2;
+		rotNorth = 1;
+		rotTop = 3;
+		rotBottom = 3;
+		tessellateBlockInWorld(tile, pos);
+		tessellatePistonRodSN(tile, x + 0.375F, x + 0.375F, y + 0.625F, y + 0.375F, z - 0.25F + 1.0F - var11, z - 0.25F + 1.0F, 0.6F, var12);
+		tessellatePistonRodSN(tile, x + 0.625F, x + 0.625F, y + 0.375F, y + 0.625F, z - 0.25F + 1.0F - var11, z - 0.25F + 1.0F, 0.6F, var12);
+		tessellatePistonRodSN(tile, x + 0.375F, x + 0.625F, y + 0.375F, y + 0.375F, z - 0.25F + 1.0F - var11, z - 0.25F + 1.0F, 0.5F, var12);
+		tessellatePistonRodSN(tile, x + 0.625F, x + 0.375F, y + 0.625F, y + 0.625F, z - 0.25F + 1.0F - var11, z - 0.25F + 1.0F, 1.0F, var12);
+		break;
+	case 4:
+		rotEast = 1;
+		rotWest = 2;
+		rotTop = 2;
+		rotBottom = 1;
+		tessellateBlockInWorld(tile, pos);
+		tessellatePistonRodEW(tile, x + 0.25F, x + 0.25F + var11, y + 0.375F, y + 0.375F, z + 0.625F, z + 0.375F, 0.5F, var12);
+		tessellatePistonRodEW(tile, x + 0.25F, x + 0.25F + var11, y + 0.625F, y + 0.625F, z + 0.375F, z + 0.625F, 1.0F, var12);
+		tessellatePistonRodEW(tile, x + 0.25F, x + 0.25F + var11, y + 0.375F, y + 0.625F, z + 0.375F, z + 0.375F, 0.6F, var12);
+		tessellatePistonRodEW(tile, x + 0.25F, x + 0.25F + var11, y + 0.625F, y + 0.375F, z + 0.625F, z + 0.625F, 0.6F, var12);
+		break;
+	case 5:
+		rotEast = 2;
+		rotWest = 1;
+		rotTop = 1;
+		rotBottom = 2;
+		tessellateBlockInWorld(tile, pos);
+		tessellatePistonRodEW(tile, x - 0.25F + 1.0F - var11, x - 0.25F + 1.0F, y + 0.375F, y + 0.375F, z + 0.625F, z + 0.375F, 0.5F, var12);
+		tessellatePistonRodEW(tile, x - 0.25F + 1.0F - var11, x - 0.25F + 1.0F, y + 0.625F, y + 0.625F, z + 0.375F, z + 0.625F, 1.0F, var12);
+		tessellatePistonRodEW(tile, x - 0.25F + 1.0F - var11, x - 0.25F + 1.0F, y + 0.375F, y + 0.625F, z + 0.375F, z + 0.375F, 0.6F, var12);
+		tessellatePistonRodEW(tile, x - 0.25F + 1.0F - var11, x - 0.25F + 1.0F, y + 0.625F, y + 0.375F, z + 0.625F, z + 0.625F, 0.6F, var12);
+	}
+
+	rotEast = 0;
+	rotWest = 0;
+	rotSouth = 0;
+	rotNorth = 0;
+	rotTop = 0;
+	rotBottom = 0;
+	bounds.set(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+	return true;
+}
+
+void TileTessellator::tessellatePistonRodUD(PistonArmTile* tile, float x, float xx, float y, float yy, float z, float zz, float a, float b) {
+    TextureUVCoordinateSet piston = tile->tex;
+	
+    float var18 = piston.minU;
+    float var20 = piston.minV;
+    float var22 = piston.getInterpolatedU(b);
+    float var24 = piston.getInterpolatedV(4.0);
+    tessellator->color(0xFFFFFF);
+    tessellator->vertexUV(x, yy, z, var22, var20);
+    tessellator->vertexUV(x, y, z, var18, var20);
+    tessellator->vertexUV(xx, y, zz, var18, var24);
+    tessellator->vertexUV(xx, yy, zz, var22, var24);
+}
+
+void TileTessellator::tessellatePistonRodSN(PistonArmTile* tile, float x, float xx, float y, float yy, float z, float zz, float a, float b) {
+    TextureUVCoordinateSet piston = tile->tex;
+
+    float var18 = piston.minU;
+    float var20 = piston.minV;
+    float var22 = piston.getInterpolatedU(b);
+    float var24 = piston.getInterpolatedV(4.0);
+    tessellator->color(0xFFFFFF);
+    tessellator->vertexUV(x, y, zz, var22, var20);
+    tessellator->vertexUV(x, y, z, var18, var20);
+    tessellator->vertexUV(xx, yy, z, var18, var24);
+    tessellator->vertexUV(xx, yy, zz, var22, var24);
+}
+
+void TileTessellator::tessellatePistonRodEW(PistonArmTile* tile, float x, float xx, float y, float yy, float z, float zz, float a, float b) {
+    TextureUVCoordinateSet piston = tile->tex;
+	
+    float var18 = piston.minU;
+    float var20 = piston.minV;
+    float var22 = piston.getInterpolatedU(b);
+    float var24 = piston.getInterpolatedV(4.0);
+    tessellator->color(0xFFFFFF);
+    tessellator->vertexUV(xx, y, z, var22, var20);
+    tessellator->vertexUV(x, y, z, var18, var20);
+    tessellator->vertexUV(x, yy, zz, var18, var24);
+    tessellator->vertexUV(xx, yy, zz, var22, var24);
 }

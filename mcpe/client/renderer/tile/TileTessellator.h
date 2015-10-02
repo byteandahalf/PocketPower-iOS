@@ -7,6 +7,8 @@ class RedstoneTile;
 class NotGateTile;
 class LeverTile;
 class RepeaterTile;
+class PistonBaseTile;
+class PistonArmTile;
 class Tile;
 class Tessellator;
 class TileSource;
@@ -36,6 +38,11 @@ public:
 	void tessellateAngledNotGate(Tile*, double, double, double, double, double);
 	bool tessellateBlockInWorld(Tile*, const TilePos&);
 	bool tessellateRepeaterInWorld(RepeaterTile*, const TilePos&, int);
+	bool tessellatePistonBaseInWorld(PistonBaseTile*, const TilePos&, bool);
+	bool tessellatePistonArmInWorld(PistonArmTile*, const TilePos&, bool);
+	void tessellatePistonRodUD(PistonArmTile*, float, float, float, float, float, float, float, float);
+	void tessellatePistonRodSN(PistonArmTile*, float, float, float, float, float, float, float, float);
+	void tessellatePistonRodEW(PistonArmTile*, float, float, float, float, float, float, float, float);
 
 	static bool (*$tessellateBlockInWorld)(TileTessellator*, Tile*, const TilePos&);
 };
