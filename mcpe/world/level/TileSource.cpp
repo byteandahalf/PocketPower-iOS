@@ -12,6 +12,7 @@ FullTile (*TileSource::$getTile)(TileSource*, const TilePos&);
 DataID (*TileSource::$getData)(TileSource*, const TilePos&);
 void (*TileSource::$updateNeighborsAt)(TileSource*, const TilePos&, TileID);
 EntityList& (*TileSource::$getEntities)(TileSource*, Entity*, const AABB&);
+void (*TileSource::$tileEvent)(TileSource*, int, int, int, int, int);
 
 bool TileSource::setTileAndData(int x, int y, int z, int id, int data, int update) {
     return $setTileAndData(this, TilePos(x, y, z), FullTile(id, data), update);

@@ -110,8 +110,8 @@ bool RepeaterTile::isGettingPowered(TileSource* region, int x, int y, int z, int
 bool RepeaterTile::use(RepeaterTile* self, Player* player, int x, int y, int z) {
     int data = player->region.getData(x, y, z);
     int delay = (data & 12) >> 2;
-    delay = delay + 1 << 2 & 12;
-    player->region.setTileAndData(x, y, z, self->id, delay | data & 3, 3);
+    delay = ((delay + 1) << 2) & 12;
+    player->region.setTileAndData(x, y, z, self->id, delay | (data & 3), 3);
     return true;
 }
 
