@@ -26,6 +26,8 @@
 #include "redstone/world/level/tile/LampTile.h"
 #include "redstone/world/level/tile/RedstoneBlockTile.h"
 #include "redstone/world/level/tile/RepeaterTile.h"
+#include "redstone/world/level/tile/PistonBaseTile.h"
+#include "redstone/world/level/tile/PistonArmTile.h"
 
 using namespace std;
 
@@ -66,6 +68,9 @@ MSHook(void, Tile$initTiles) {
 	Tile::lamp_on = new LampTile(124, TextureUVCoordinateSet(0.2813, 0.5, 0.3125, 0.5625));
 	Tile::diode_off = new RepeaterTile(93, TextureUVCoordinateSet(0.9063, 0.4375, 0.9375, 0.5), false);
 	Tile::diode_on = new RepeaterTile(94, TextureUVCoordinateSet(0.9375, 0.4375, 0.9687, 0.5), true);
+	Tile::pistonNormal = new PistonBaseTile(33, false);
+	Tile::pistonSticky = new PistonBaseTile(29, true);
+	Tile::pistonArm = new PistonArmTile(34);
 }
 
 MSHook(void, Item$initItems) {
@@ -120,6 +125,7 @@ MSInitialize {
 	FLHookSymbol(TileSource::$getData, TILESOURCE_GETDATA);
 	FLHookSymbol(TileSource::$updateNeighborsAt, TILESOURCE_UPDATE);
 	FLHookSymbol(TileSource::$getEntities, TILESOURCE_GETENTITIES);
+	FLHookSymbol(TileSource::$tileEvent, TILESOURCE_TILEEVENT);
 	FLHookSymbol(TileTessellator::$tessellateBlockInWorld, TILETESS_TESSBLOCK);
 	FLHookSymbol(Tessellator::$vertex, TESS_VERTEX);
 	FLHookSymbol(TileTickingQueue::$add, TICKQUEUE_ADD);

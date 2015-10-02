@@ -29,6 +29,10 @@ void TileSource::updateNeighborsAt(int x, int y, int z, int id) {
     $updateNeighborsAt(this, TilePos(x, y, z), id);
 }
 
+void TileSource::tileEvent(int x, int y, int z, int data1, int data2) {
+    $tileEvent(this, x, y, z, data1, data2);
+}
+
 EntityList& TileSource::getEntities(Entity* entity, const AABB& pos) {
     return $getEntities(this, entity, pos);
 }

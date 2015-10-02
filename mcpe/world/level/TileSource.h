@@ -30,10 +30,12 @@ public:
     int getStrongestIndirectPower(int, int, int);
     TileTickingQueue* getTickingQueue();
     EntityList& getEntities(Entity*, const AABB&);
+    void tileEvent(int, int, int, int, int);
 
     static bool (*$setTileAndData)(TileSource*, const TilePos&, FullTile, int);
     static FullTile (*$getTile)(TileSource*, const TilePos&);
     static DataID (*$getData)(TileSource*, const TilePos&);
     static void (*$updateNeighborsAt)(TileSource*, const TilePos&, TileID);
     static EntityList& (*$getEntities)(TileSource*, Entity*, const AABB&);
+    static void (*$tileEvent)(TileSource*, int, int, int, int, int);
 };

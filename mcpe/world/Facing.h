@@ -4,5 +4,5 @@ struct Facing {
 	static int STEP_X[];
 	static int STEP_Y[];
 	static int STEP_Z[];
-	static int OPPOSITE[];
+	static int OPPOSITE_FACING[];
 };

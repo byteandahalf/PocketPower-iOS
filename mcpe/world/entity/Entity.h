@@ -8,19 +8,21 @@ class Level;
 
 class Entity {
 public:
-	void** vtable;
-	char filler[ENTITY_FILLER];
-	TileSource& region;
-	int added;
-	int idk;
-	Level* level;
-	float oldX;
-	float oldY;
-	float oldZ;
-	float velX;
-	float velY;
-	float velZ;
-	float yaw;
+	void** vtable; // 0
+	char filler[ENTITY_FILLER]; // 8
+	TileSource& region; // 72
+	int added; // 80
+	int idk; // 84
+	Level* level; // 88
+	float oldX; // 96
+	float oldY; // 100
+	float oldZ; // 104
+	float velX; // 108
+	float velY; // 112
+	float velZ; // 116
+	float yaw; // 120
+	char filler2[96]; // 124
+	float heightOffset; // 220
 };
 
 typedef std::vector<Entity*> EntityList;

@@ -44,6 +44,9 @@ public:
     std::string name;
 
     static Tile* redstoneDust;
+    static Tile* pistonNormal;
+    static Tile* pistonSticky;
+    static Tile* pistonArm;
     static Tile* notGate_on;
     static Tile* notGate_off;
     static Tile* buttonStone;

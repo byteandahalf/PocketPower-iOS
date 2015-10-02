@@ -10,6 +10,9 @@ void (*Tile::$init)(Tile*);
 uint8_t* Tile::lightBlock;
 
 Tile* Tile::redstoneDust;
+Tile* Tile::pistonNormal;
+Tile* Tile::pistonSticky;
+Tile* Tile::pistonArm;
 Tile* Tile::notGate_on;
 Tile* Tile::notGate_off;
 Tile* Tile::buttonStone;
