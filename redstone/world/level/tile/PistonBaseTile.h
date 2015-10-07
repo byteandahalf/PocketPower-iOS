@@ -29,6 +29,7 @@ private:
 	static bool isMoveableBlock(Tile*, TileSource*, int, int, int, bool);
 	static bool canPushRow(TileSource*, int, int, int, int);
 	bool actuallyPushRow(TileSource*, int, int, int, int);
+	void pushEntities(TileSource*, int, int, int, int, int, int);
 	bool hasPower(TileSource*, int, int, int, int);
 	void updateState(TileSource*, int, int, int);
 

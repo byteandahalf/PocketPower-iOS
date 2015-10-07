@@ -17,6 +17,7 @@ public:
     static void tick(NotGateTile*, TileSource*, int, int, int, Random*);
     static void onPlace(NotGateTile*, TileSource*, int, int, int);
     static void onRemove(NotGateTile*, TileSource*, int, int, int);
+    static bool canSurvive(NotGateTile*, TileSource*, int, int, int);
 
     void initVtable();
 };

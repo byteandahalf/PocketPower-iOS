@@ -1,5 +1,6 @@
 #include "../../../../mcpe/world/level/tile/Tile.h"
 class TileSource;
+struct Player;
 
 class RedstoneTile : public Tile {
 public:
@@ -20,7 +21,7 @@ public:
     static int getSignal(RedstoneTile*, TileSource*, int, int, int, int);
     static bool isSignalSource(RedstoneTile*);
     static void onPlace(RedstoneTile*, TileSource*, int, int, int);
-    static void onRemove(RedstoneTile*, TileSource*, int, int, int);
+    static void playerDestroy(RedstoneTile*, Player*, int, int, int);
     static bool canSurvive(RedstoneTile*, TileSource*, int, int, int);
     static bool mayPlace(RedstoneTile*, TileSource*, int, int, int);
 

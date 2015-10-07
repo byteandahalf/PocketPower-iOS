@@ -198,7 +198,7 @@ bool PistonBaseTile::isMoveableBlock(Tile* tile, TileSource* region, int x, int 
 	if(tile->id == 33 || tile->id == 29)
 		return !isPowered(region->getData(x, y, z));
 	
-	return (tile->id != 52 && tile->id != 54 && tile->id != 61 && tile->id != 62 && tile->id != 63 && tile->id != 116 && tile->id != 117 && tile->id != 140 && tile->id != 143 && tile->id != 247);	
+	return (tile->id != 52 && tile->id != 54 && tile->id != 61 && tile->id != 62 && tile->id != 63 && tile->id != 116 && tile->id != 117 && tile->id != 140 && tile->id != 143 && tile->id != 247); 
 	//return region->getTileEntity({x, y, z}) == NULL;
 }
 
@@ -235,6 +235,16 @@ void PistonBaseTile::triggerEvent(PistonBaseTile* self, TileSource* region, int 
 	//self->ignoreUpdates = false;
 }
 
+void PistonBaseTile::pushEntities(TileSource* region, int x, int y, int z, int xx, int yy, int zz) {
+	AABB bb(x, y, z, x + 1, y + 1, z + 1);
+	EntityList& list = region->getEntities(NULL, bb);
+
+	for(Entity* e : list) {
+		void (*move)(Entity*, float, float, float) = (void (*)(Entity*, float, float, float)) e->vtable[VT_ENTITY_MOVE];
+		move(e, xx, yy, zz);
+	}
+}
+
 bool PistonBaseTile::actuallyPushRow(TileSource* region, int x, int y, int z, int rotation) {
 	int xx = x + Facing::STEP_X[rotation];
 	int yy = y + Facing::STEP_Y[rotation];
@@ -260,6 +270,9 @@ bool PistonBaseTile::actuallyPushRow(TileSource* region, int x, int y, int z, in
 		zz += Facing::STEP_Z[rotation];
 		counter++;
 	} while(counter < 13);
+
+	pushEntities(region, xx, yy, zz, Facing::STEP_X[rotation], Facing::STEP_Y[rotation],
+Facing::STEP_Z[rotation]);
 
 	while(xx != x || yy != y || zz != z) {
 		int i2 = xx - Facing::STEP_X[rotation];

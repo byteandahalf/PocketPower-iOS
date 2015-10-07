@@ -142,10 +142,10 @@ bool LeverTile::canSurvive(LeverTile* self, TileSource* region, int x, int y, in
 }
 
 void LeverTile::neighborChanged(LeverTile* self, TileSource* region, int x, int y, int z, int newX, int newY, int newZ) {
-	/*if(!canSurvive(region, x, y, z)) {
-		region->removeTile(x, y, z);
-		region->scheduleBlockUpdate(x, y, z, id, 0);
-	}*/
+	if(!canSurvive(self, region, x, y, z)) {
+		region->setTileAndData(x, y, z, 0, 0, 3);
+		region->scheduleBlockUpdate(x, y, z, self->id, 0);
+	}
 }
 
 void LeverTile::tick(LeverTile* self, TileSource* region, int x, int y, int z, Random* random) {}

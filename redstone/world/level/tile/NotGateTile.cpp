@@ -10,6 +10,7 @@ NotGateTile::NotGateTile(int id, TextureUVCoordinateSet texture) : Tile(id, text
     if(isActive())
         renderPass = 7;
 
+    hitbox.set(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
     renderType = 2;
     destroyTime = 0.0F;
     solid[id] = false;
@@ -29,6 +30,7 @@ void NotGateTile::initVtable() {
     vtable[VT_TILE_ADDCOLLISION] = (void*) &addCollisionShapes;
     vtable[VT_TILE_TICK] = (void*) &tick;
     vtable[VT_TILE_ANIMATE] = (void*) &addCollisionShapes;
+    vtable[VT_TILE_SURVIVES] = (void*) &canSurvive;
 }
 
 bool NotGateTile::isActive() {
@@ -47,13 +49,25 @@ int NotGateTile::getDirectSignal(NotGateTile* tile, TileSource* region, int x, i
     return 15;
 }
 
+bool NotGateTile::canSurvive(NotGateTile* self, TileSource* region, int x, int y, int z) {
+    int data = region->getData(x, y, z);
+    if((data == 5 || data == 0) && solid[region->getTile(x, y - 1, z).id]) return true;
+    if(data == 3 && solid[region->getTile(x, y, z - 1).id]) return true;
+    if(data == 4 && solid[region->getTile(x, y, z + 1).id]) return true;
+    if(data == 1 && solid[region->getTile(x - 1, y, z).id]) return true;
+    return data == 2 && solid[region->getTile(x + 1, y, z).id];
+}
+
 int NotGateTile::getSignal(NotGateTile* tile, TileSource* region, int x, int y, int z, int side) {
     if(side == 0) return getDirectSignal(tile, region, x, y, z, side);
     return 0;
 }
 
 void NotGateTile::onPlace(NotGateTile* self, TileSource* region, int x, int y, int z) {
-    if(region->getData(x, y, z) == 0) //TorchTile::onPlace(region, x, y, z);
+    if(region->getData(x, y, z) == 0) {
+        void (*super)(Tile*, TileSource*, int, int, int) = (void (*)(Tile*, TileSource*, int, int, int)) tiles[50]->vtable[VT_TILE_ONPLACE];
+        super(tiles[50], region, x, y, z);
+    }
     if(self->isActive()) {
         region->updateNeighborsAt(x, y - 1, z, notGate_on->id);
         region->updateNeighborsAt(x, y + 1, z, notGate_on->id);
@@ -71,6 +85,8 @@ void NotGateTile::onRemove(NotGateTile* self, TileSource* region, int x, int y, 
 }
 
 void NotGateTile::neighborChanged(NotGateTile* self, TileSource* region, int x, int y, int z, int xx, int yy, int zz) {
+    if(!canSurvive(self, region, x, y, z))
+        region->setTileAndData(x, y, z, 0, 0, 0);
     region->scheduleBlockUpdate(x, y, z, self->id, 2);
 }
 
@@ -90,7 +106,7 @@ bool NotGateTile::isSignalSource(NotGateTile* tile) {
 
 bool NotGateTile::checkForBurnout(TileSource* region, int x, int y, int z) {
     int data = region->getData(x, y, z);
-    if(data == 5 && region->getIndirectPowerOutput(x, y - 1, z, 0)) return true;
+    if((data == 5 || data == 0) && region->getIndirectPowerOutput(x, y - 1, z, 0)) return true;
     if(data == 3 && region->getIndirectPowerOutput(x, y, z - 1, 2)) return true;
     if(data == 4 && region->getIndirectPowerOutput(x, y, z + 1, 3)) return true;
     if(data == 1 && region->getIndirectPowerOutput(x - 1, y, z, 4)) return true;

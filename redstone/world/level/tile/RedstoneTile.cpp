@@ -1,7 +1,7 @@
 #include "RedstoneTile.h"
 #include "../../../../mcpe/world/level/TileSource.h"
 #include "../../../../mcpe/world/level/TilePos.h"
-
+#include "../../../../mcpe/world/entity/player/Player.h"
 #include "../../../../mcpe/CommonTypes.h"
 #include "../../../../addresses.h"
 
@@ -26,7 +26,7 @@ void RedstoneTile::initVtable() {
     vtable[VT_TILE_NEIGHBORCH] = (void*) &neighborChanged;
     vtable[VT_TILE_ISSOURCE] = (void*) &isSignalSource;
     vtable[VT_TILE_ONPLACE] = (void*) &onPlace;
-    vtable[VT_TILE_REMOVE] = (void*) &onRemove;
+    vtable[VT_TILE_PLAYERDESTROY] = (void*) &playerDestroy;
     vtable[VT_TILE_GETDIRECT] = (void*) &getDirectSignal;
     vtable[VT_TILE_GETSIGNAL] = (void*) &getSignal;
     vtable[VT_TILE_SURVIVES] = (void*) &canSurvive;
@@ -39,7 +39,6 @@ bool RedstoneTile::canSurvive(RedstoneTile* self, TileSource* region, int x, int
 
 bool RedstoneTile::mayPlace(RedstoneTile* self, TileSource* region, int x, int y, int z) {
     if(region->getTile(x, y, z).id != 0) return false;
-    // TODO: Implement placement exceptions for slabs, glowstone
     return solid[region->getTile(x, y - 1, z).id];
 }
 
@@ -73,30 +72,30 @@ void RedstoneTile::onPlace(RedstoneTile* tile, TileSource* region, int x, int y,
         tile->updateWires(region, x, y - 1, z + 1);
 }
 
-void RedstoneTile::onRemove(RedstoneTile* tile, TileSource* region, int x, int y, int z) {
-    region->updateNeighborsAt(x, y + 1, z, tile->id);
-    region->updateNeighborsAt(x, y - 1, z, tile->id);
-    tile->recalculate(region, x, y, z);
-    tile->updateWires(region, x - 1, y, z);
-    tile->updateWires(region, x + 1, y, z);
-    tile->updateWires(region, x, y, z - 1);
-    tile->updateWires(region, x, y, z + 1);
-    if(solid[region->getTile(x - 1, y, z).id])
-        tile->updateWires(region, x - 1, y + 1, z);
+void RedstoneTile::playerDestroy(RedstoneTile* tile, Player* player, int x, int y, int z) {
+    player->region.updateNeighborsAt(x, y + 1, z, tile->id);
+    player->region.updateNeighborsAt(x, y - 1, z, tile->id);
+    tile->recalculate(&player->region, x, y, z);
+    tile->updateWires(&player->region, x - 1, y, z);
+    tile->updateWires(&player->region, x + 1, y, z);
+    tile->updateWires(&player->region, x, y, z - 1);
+    tile->updateWires(&player->region, x, y, z + 1);
+    if(solid[player->region.getTile(x - 1, y, z).id])
+        tile->updateWires(&player->region, x - 1, y + 1, z);
     else
-        tile->updateWires(region, x - 1, y - 1, z);
-    if(solid[region->getTile(x + 1, y, z).id])
-        tile->updateWires(region, x + 1, y + 1, z);
+        tile->updateWires(&player->region, x - 1, y - 1, z);
+    if(solid[player->region.getTile(x + 1, y, z).id])
+        tile->updateWires(&player->region, x + 1, y + 1, z);
     else
-        tile->updateWires(region, x + 1, y - 1, z);
-    if(solid[region->getTile(x, y, z - 1).id])
-        tile->updateWires(region, x, y + 1, z - 1);
+        tile->updateWires(&player->region, x + 1, y - 1, z);
+    if(solid[player->region.getTile(x, y, z - 1).id])
+        tile->updateWires(&player->region, x, y + 1, z - 1);
     else
-        tile->updateWires(region, x, y - 1, z - 1);
-    if(solid[region->getTile(x, y, z + 1).id])
-        tile->updateWires(region, x, y + 1, z + 1);
+        tile->updateWires(&player->region, x, y - 1, z - 1);
+    if(solid[player->region.getTile(x, y, z + 1).id])
+        tile->updateWires(&player->region, x, y + 1, z + 1);
     else
-        tile->updateWires(region, x, y - 1, z + 1);
+        tile->updateWires(&player->region, x, y - 1, z + 1);
 }
 
 void RedstoneTile::calculateChanges(TileSource* region, int x, int y, int z, int xx, int yy, int zz) {
@@ -161,8 +160,12 @@ void RedstoneTile::recalculate(TileSource* region, int x, int y, int z) {
     calculateChanges(region, x, y, z, x, y, z);
 }
 
-
 void RedstoneTile::neighborChanged(RedstoneTile* self, TileSource* region, int x, int y, int z, int xx, int yy, int zz) {
+    if(!canSurvive(self, region, x, y, z)) {
+        region->setTileAndData(x, y, z, 0, 0, 3);
+        return;
+    }
+
     self->recalculate(region, x, y, z);
 
     void (*super)(Tile*, TileSource*, int, int, int, int, int, int) = (void (*)(Tile*, TileSource*, int, int, int, int, int, int)) Tile::tiles[1]->vtable[VT_TILE_NEIGHBORCH];

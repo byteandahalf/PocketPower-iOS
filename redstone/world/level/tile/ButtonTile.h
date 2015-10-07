@@ -15,6 +15,7 @@ public:
 	bool isWood();
 	int getTickDelay();
 
+	static bool canSurvive(ButtonTile*, TileSource*, int, int, int);
 	static const AABB& getVisualShapeInWorld(ButtonTile*, TileSource*, int, int, int, AABB&, bool);
 	static const AABB& getVisualShape(ButtonTile*, unsigned char, AABB&, bool);
 	static void onPlace(ButtonTile*, TileSource*, int, int, int);

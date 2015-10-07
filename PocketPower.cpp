@@ -109,13 +109,13 @@ MSHook(void, Item$initCreativeItems) {
 
 	_Item$initCreativeItems();
 
+	Item::addCreativeItem(Item::items[356], 0);
 	Item::addCreativeItem(Item::items[76], 0);
 	Item::addCreativeItem(Item::items[70], 0);
 	Item::addCreativeItem(Item::items[72], 0);
 	Item::addCreativeItem(Item::items[147], 0);
 	Item::addCreativeItem(Item::items[148], 0);
 	Item::addCreativeItem(Item::items[77], 0);
-	Item::addCreativeItem(Item::items[356], 0);
 	Item::addCreativeItem(Item::items[143], 0);
 	Item::addCreativeItem(Item::items[69], 0);
 	Item::addCreativeItem(Item::items[123], 0);

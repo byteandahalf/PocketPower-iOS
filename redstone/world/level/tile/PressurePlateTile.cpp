@@ -1,5 +1,6 @@
 #include "PressurePlateTile.h"
 #include "../../../../mcpe/world/level/TileSource.h"
+#include "../../../../mcpe/world/entity/player/Player.h"
 #include "../../../../addresses.h"
 
 PressurePlateTile::PressurePlateTile(int blockId, TextureUVCoordinateSet texture, Material* material) : Tile(blockId, texture, material) {
@@ -28,7 +29,7 @@ void PressurePlateTile::initVtable() {
 	vtable[VT_TILE_GETSIGNAL] = (void*) &getSignal;
 	vtable[VT_TILE_GETDIRECT] = (void*) &getDirectSignal;
 	vtable[VT_TILE_ISSOURCE] = (void*) &isSignalSource;
-	vtable[VT_TILE_REMOVE] = (void*) &onRemove;
+	vtable[VT_TILE_PLAYERDESTROY] = (void*) &playerDestroy;
 	vtable[VT_TILE_GETSHAPEWORLD] = (void*) &getVisualShapeInWorld;
 	vtable[VT_TILE_ADDCOLLISION] = (void*) &addCollisionShapes;
 	vtable[VT_PLATETILE_GETPOWER] = (void*) &ABSTRACT_CALL;
@@ -77,11 +78,11 @@ bool PressurePlateTile::isSignalSource() {
 	return true;
 }
 
-void PressurePlateTile::onRemove(PressurePlateTile* self, TileSource* region, int x, int y, int z) {
+void PressurePlateTile::playerDestroy(PressurePlateTile* self, Player* player, int x, int y, int z) {
 	int (*getPowerFromData)(PressurePlateTile*, int) = (int (*)(PressurePlateTile*, int)) self->vtable[VT_PLATETILE_POWERDATA];
-	if(getPowerFromData(self, region->getData(x, y, z)) > 0) {
-		region->updateNeighborsAt(x, y, z, self->id);
-		region->updateNeighborsAt(x, y - 1, z, self->id);
+	if(getPowerFromData(self, player->region.getData(x, y, z)) > 0) {
+		player->region.updateNeighborsAt(x, y, z, self->id);
+		player->region.updateNeighborsAt(x, y - 1, z, self->id);
 	}
 }
 

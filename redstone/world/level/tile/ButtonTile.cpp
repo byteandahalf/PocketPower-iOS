@@ -31,6 +31,22 @@ void ButtonTile::initVtable() {
 	vtable[VT_TILE_GETSHAPE] = (void*) &getVisualShape;
 	vtable[VT_TILE_GETSHAPEWORLD] = (void*) &getVisualShapeInWorld;
 	vtable[VT_TILE_GETPLACEDATA] = (void*) &getPlacementDataValue;
+	vtable[VT_TILE_SURVIVES] = (void*) &canSurvive;
+}
+
+bool ButtonTile::canSurvive(ButtonTile* self, TileSource* region, int x, int y, int z) {
+    int rot = region->getData(x, y, z) & 7;
+    if(rot == 6)
+	return solid[region->getTile(x, y + 1, z).id];
+    if(rot == 5)
+	return solid[region->getTile(x, y - 1, z).id];
+    if(rot == 4)
+	return solid[region->getTile(x, y, z + 1).id];
+    if(rot == 3)
+	return solid[region->getTile(x, y, z - 1).id];
+    if(rot == 2)
+	return solid[region->getTile(x + 1, y, z).id];
+    return rot == 1 && solid[region->getTile(x - 1, y, z).id];
 }
 
 int ButtonTile::getTickDelay() {
@@ -87,10 +103,10 @@ const AABB& ButtonTile::getVisualShapeInWorld(ButtonTile* self, TileSource* regi
 }
 
 void ButtonTile::neighborChanged(ButtonTile* self, TileSource* region, int x, int y, int z, int newX, int newY, int newZ) {
-	/*if(!canSurvive(region, x, y, z)) {
-		region->removeTile(x, y, z);
-		region->scheduleBlockUpdate(x, y, z, id, 0);
-	}*/
+	if(!canSurvive(self, region, x, y, z)) {
+		region->setTileAndData(x, y, z, 0, 0, 3);
+		region->scheduleBlockUpdate(x, y, z, self->id, 0);
+	}
 }
 
 bool ButtonTile::use(ButtonTile* self, Player* player, int x, int y, int z) {

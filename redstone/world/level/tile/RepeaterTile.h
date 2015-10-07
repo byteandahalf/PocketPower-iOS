@@ -24,6 +24,7 @@ public:
 	static void onPlace(RepeaterTile*, TileSource*, int, int, int);
 	static bool use(RepeaterTile*, Player*, int, int, int);
 	static int getResource();
+	static bool mayPlace(RepeaterTile*, TileSource*, int, int, int);
 
 private:
 	void initVtable();

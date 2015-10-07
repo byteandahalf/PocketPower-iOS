@@ -33,6 +33,11 @@ void RepeaterTile::initVtable() {
     vtable[VT_TILE_ONPLACE] = (void*) &onPlace;
     vtable[VT_TILE_USE] = (void*) &use;
     vtable[VT_TILE_RESOURCE] = (void*) &getResource;
+    vtable[VT_TILE_MAYPLACE] = (void*) &mayPlace;
+}
+
+bool RepeaterTile::mayPlace(RepeaterTile* self, TileSource* region, int x, int y, int z) {
+    return solid[region->getTile(x, y - 1, z).id];
 }
 
 const TextureUVCoordinateSet& RepeaterTile::getTexture(RepeaterTile* self, signed char side, int data) {
@@ -61,19 +66,27 @@ int RepeaterTile::getSignal(RepeaterTile* self, TileSource* region, int x, int y
 
 int RepeaterTile::getDirectSignal(RepeaterTile* self, TileSource* region, int x, int y, int z, int side) {
     if(!self->powered)
-        return false;
+        return 0;
 
     int rot = region->getData(x, y, z) & 3;
     if(rot == 0 && side == 3)
-        return true;
+        return 15;
     if(rot == 1 && side == 4)
-        return true;
+        return 15;
     if(rot == 2 && side == 2)
-        return true;
-    return rot == 3 && side == 5;
+        return 15;
+    if(rot == 3 && side == 5)
+        return 15;
+
+    return 0;
 }
 
 void RepeaterTile::neighborChanged(RepeaterTile* self, TileSource* region, int x, int y, int z, int changedX, int changedY, int changedZ) {
+    if(!mayPlace(self, region, x, y, z)) {
+        region->setTileAndData(x, y, z, 0, 0, 3);
+        return;
+    }
+
     int data = region->getData(x, y, z);
     bool shouldBePowered = self->isGettingPowered(region, x, y, z, data);
     int delay = (data & 12) >> 2;

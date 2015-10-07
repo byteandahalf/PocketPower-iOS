@@ -39,6 +39,9 @@
 #define VT_ITEM_SIZE 47 * sizeof(void*)
 #define VT_ITEM_USEON 11
 
+#define VT_ENTITY_MOVE 13
+
+
 #define TILE_VTABLE Address(0x4962F0, 0x1005B97F0)
 #define TILE_INIT Address(0x2EF658, 0x1003B0AA4)
 #define TILE_TILES Address(0x5263F0, 0x10062FE10)

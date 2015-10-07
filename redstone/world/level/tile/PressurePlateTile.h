@@ -3,6 +3,7 @@
 class Entity;
 class TileSource;
 class Random;
+struct Player;
 #include <vector>
 
 class PressurePlateTile : public Tile {
@@ -18,7 +19,7 @@ public:
 	static int getDirectSignal(PressurePlateTile*, TileSource*, int, int, int, int);
 	static void addCollisionShapes();
 	static bool isSignalSource();
-	static void onRemove(PressurePlateTile*, TileSource*, int, int, int);
+	static void playerDestroy(PressurePlateTile*, Player*, int, int, int);
 
 	void setStateIfMobInteractsWithPlate(TileSource*, int, int, int, int);
 	
