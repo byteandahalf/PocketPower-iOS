@@ -406,7 +406,7 @@ bool TileTessellator::tessellatePistonBaseInWorld(PistonBaseTile* tile, const Ti
 			bounds.set(0.0F, 0.0F, 0.0F, 0.75F, 1.0F, 1.0F);
 		}
 
-		tile->hitbox = bounds;
+		bounds = tile->getVisualShapeInWorld(tile, region, x, y, z, bounds, true);
 		tessellateBlockInWorld(tile, pos);
 		rotEast = 0;
 		rotWest = 0;

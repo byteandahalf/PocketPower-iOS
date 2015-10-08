@@ -32,7 +32,6 @@
 
 using namespace std;
 
-
 MSHook(bool, TileTessellator$tessellateInWorld, TileTessellator* self, Tile* tile, const TilePos& pos, int data, bool b) {
 	switch(tile->renderType) {
 	case 5:
@@ -85,9 +84,13 @@ MSHook(void, Item$initItems) {
     _Item$initItems();
 
     Item::repeater = new RepeaterItem(356);
+
+    for(int i = 256; i < 511; i++)
+	Item::items[i] = Item::repeater;
 }
 
 MSHook(bool, Item$useOn, Item* self, ItemInstance* item, Player* player, int x, int y, int z, signed char side, float xx, float yy, float zz) {
+	return false;
 	if(item->item == Item::items[331]) {
 	    if(((RedstoneTile*) Tile::tiles[55])->mayPlace((RedstoneTile*) Tile::tiles[55], &player->region, x + Facing::STEP_X[side], y + Facing::STEP_Y[side], z + Facing::STEP_Z[side]))
 			player->region.setTileAndData(x + Facing::STEP_X[side], y + Facing::STEP_Y[side], z + Facing::STEP_Z[side], 55, 0, 3);

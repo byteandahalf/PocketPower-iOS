@@ -6,8 +6,8 @@ PROCESS := minecraftpe
 
 # Build using libc++ and C++11 support
 # Unfortunately these build parameters are set up just for me :(
-override CXXFLAGS += -stdlib=libc++ -std=c++11 -miphoneos-version-min=5.0 -Wall -Wextra -Wno-unused-parameter -isysroot /iPhoneOS9.1.sdk
-override LDFLAGS += -stdlib=libc++ -lc++ -lsubstrate -isysroot /iPhoneOS9.1.sdk
+override CXXFLAGS += -stdlib=libstdc++ -std=c++11 -miphoneos-version-min=5.0 -Wall -Wextra -Wno-unused-parameter -isysroot /iPhoneOS8.1.sdk
+override LDFLAGS += -stdlib=libstdc++ -lc++ -lsubstrate -isysroot /iPhoneOS8.1.sdk
 
 
 # Names of the tweak library, substrate filter, and debian package
@@ -27,7 +27,7 @@ UNSTRIPPED := $(BUILD)/$(TWEAK:.dylib=_unstripped.dylib)
 SRCS := $(shell find . -type f -name '*.cpp')
 OBJS := $(addprefix $(BUILD)/,$(SRCS:.cpp=.o))
 # Supported architectures
-ARCHS := arm64
+ARCHS := armv7 arm64
 ARCHFLAGS := $(addprefix -arch ,$(ARCHS))
 # Frameworks for linking
 FRAMEWORKS := Forklift
