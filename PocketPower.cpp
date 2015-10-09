@@ -29,6 +29,7 @@
 #include "redstone/world/level/tile/RepeaterTile.h"
 #include "redstone/world/level/tile/PistonBaseTile.h"
 #include "redstone/world/level/tile/PistonArmTile.h"
+#include "redstone/world/level/tile/DoorTile.h"
 
 using namespace std;
 
@@ -60,6 +61,8 @@ MSHook(void, Tile$initTiles) {
 
 	TntTile::initVtable((TntTile*) Tile::tiles[46]);
 	((RedstoneBlockTile*) Tile::tiles[152])->initVtable();
+	((DoorTile*) Tile::tiles[64])->initVtable();
+	((DoorTile*) Tile::tiles[71])->initVtable();
 
 	Tile::redstoneDust = new RedstoneTile(55);
 	Tile::lever = new LeverTile(69);
@@ -104,6 +107,7 @@ MSHook(void, Item$initCreativeItems) {
 	Tile::tiles[27]->creativeTab = 4;
 	Tile::tiles[152]->creativeTab = 4;
 	Tile::tiles[46]->creativeTab = 4;
+	Item::items[324]->creativeTab = 4;
 	Item::items[331]->creativeTab = 4;
 
 	_Item$initCreativeItems();
@@ -120,6 +124,7 @@ MSHook(void, Item$initCreativeItems) {
 	Item::addCreativeItem(Item::items[123], 0);
 	Item::addCreativeItem(Item::items[33], 0);
 	Item::addCreativeItem(Item::items[29], 0);
+	Item::addCreativeItem(Item::items[330], 0);
 };
 
 
@@ -141,6 +146,7 @@ MSInitialize {
 	FLHookSymbol(Tessellator::$vertex, TESS_VERTEX);
 	FLHookSymbol(TileTickingQueue::$add, TICKQUEUE_ADD);
 	FLHookSymbol(Item::creativeList, ITEM_CREATIVELIST);
+	FLHookSymbol(DoorTile::$setOpen, DOORTILE_SETOPEN);
 
 	FLHookFunction(TILETESS_TESS, MSHake(TileTessellator$tessellateInWorld));
 	FLHookFunction(TILE_INITTILES, MSHake(Tile$initTiles));
