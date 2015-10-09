@@ -6,7 +6,6 @@ void (*DoorTile::_neighborChanged)(DoorTile*, TileSource*, int, int, int, int, i
 void (*DoorTile::$setOpen)(DoorTile*, TileSource&, int, int, int, bool, Mob*);
 
 void DoorTile::initVtable() {
-	_neighborChanged = (void (*)(DoorTile*, TileSource*, int, int, int, int, int, int)) vtable[VT_TILE_NEIGHBORCH];
 	vtable[VT_TILE_NEIGHBORCH] = (void*) &neighborChanged;
 }
 

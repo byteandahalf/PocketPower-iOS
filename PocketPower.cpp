@@ -146,6 +146,7 @@ MSInitialize {
 	FLHookSymbol(Tessellator::$vertex, TESS_VERTEX);
 	FLHookSymbol(TileTickingQueue::$add, TICKQUEUE_ADD);
 	FLHookSymbol(Item::creativeList, ITEM_CREATIVELIST);
+	FLHookSymbol(DoorTile::_neighborChanged, DOORTILE_NEIGHBORCH);
 	FLHookSymbol(DoorTile::$setOpen, DOORTILE_SETOPEN);
 
 	FLHookFunction(TILETESS_TESS, MSHake(TileTessellator$tessellateInWorld));
