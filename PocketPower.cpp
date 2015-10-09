@@ -62,7 +62,6 @@ MSHook(void, Tile$initTiles) {
 	TntTile::initVtable((TntTile*) Tile::tiles[46]);
 	((RedstoneBlockTile*) Tile::tiles[152])->initVtable();
 	((DoorTile*) Tile::tiles[64])->initVtable();
-	((DoorTile*) Tile::tiles[71])->initVtable();
 
 	Tile::redstoneDust = new RedstoneTile(55);
 	Tile::lever = new LeverTile(69);
@@ -146,7 +145,6 @@ MSInitialize {
 	FLHookSymbol(Tessellator::$vertex, TESS_VERTEX);
 	FLHookSymbol(TileTickingQueue::$add, TICKQUEUE_ADD);
 	FLHookSymbol(Item::creativeList, ITEM_CREATIVELIST);
-	FLHookSymbol(DoorTile::_neighborChanged, DOORTILE_NEIGHBORCH);
 	FLHookSymbol(DoorTile::$setOpen, DOORTILE_SETOPEN);
 
 	FLHookFunction(TILETESS_TESS, MSHake(TileTessellator$tessellateInWorld));
