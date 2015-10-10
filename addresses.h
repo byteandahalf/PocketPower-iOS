@@ -1,4 +1,5 @@
 #pragma once
+#include <Forklift/Forklift.h>
 
 #define Address(armv7, arm64) FLAddress(armv7, 0x00000000, arm64)
 
@@ -53,6 +54,7 @@
 
 #define DOORTILE_SETOPEN Address(0x2CB06C | 1, 0x100385BA4)
 
+#define ITEM_VTABLE Address(0x48CE28, 0x1005A77E0)
 #define ITEM_CREATIVELIST Address(0x51D520, 0x100627AC0)
 #define ITEM_INITCREATIVE Address(0x21E40C | 1, 0x100298980)
 #define ITEM_ITEMS Address(0x526BF0, 0x10061B950)

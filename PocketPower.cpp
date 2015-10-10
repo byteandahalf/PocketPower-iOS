@@ -12,6 +12,7 @@
 #include "mcpe/world/level/TilePos.h"
 #include "mcpe/world/entity/player/Player.h"
 #include "mcpe/world/item/Item.h"
+#include "mcpe/world/item/TileItem.h"
 #include "mcpe/world/item/ItemInstance.h"
 #include "mcpe/CommonTypes.h"
 #include "mcpe/world/Facing.h"
@@ -100,11 +101,12 @@ MSHook(void, Tile$initTiles) {
 	Tile::pistonNormal = new PistonBaseTile(33, false);
 	Tile::pistonSticky = new PistonBaseTile(29, true);
 	Tile::pistonArm = new PistonArmTile(34);
+
+	initTileItems();
 }
 
 MSHook(void, Item$initItems) {
     _Item$initItems();
-    initTileItems();
 
     Item::repeater = new RepeaterItem(356);
 }
@@ -155,6 +157,7 @@ MSInitialize {
 	FLHookSymbol(Tile::solid, TILE_SOLID);
 	FLHookSymbol(Tile::lightBlock, TILE_LIGHTBLOCK);
 	FLHookSymbol(Tile::shouldTick, TILE_SHOULDTICK);
+	FLHookSymbol(Item::_vtable, ITEM_VTABLE);
 	FLHookSymbol(Item::items, ITEM_ITEMS);
 	FLHookSymbol(TileSource::$setTileAndData, TILESOURCE_SETTILE);
 	FLHookSymbol(TileSource::$getTile, TILESOURCE_GETTILE);

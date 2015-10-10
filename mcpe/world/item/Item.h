@@ -3,11 +3,12 @@
 #include <vector>
 #include "../../client/renderer/texture/TextureUVCoordinateSet.h"
 #include "ItemInstance.h"
-#include "../../../../addresses.h"
+#include "../../../addresses.h"
 class Tile;
 
 class Item {
 public:
+    static void** _vtable;
     static Item** items;
     static std::vector<ItemInstance>* creativeList;
 
@@ -29,6 +30,5 @@ public:
     int creativeTab; // 108
     bool renderAsSword; // 112
     bool isStackedByData; // 113
-    int iddk; // 116
     Item* craftingRemainingItem; // 120
 };
