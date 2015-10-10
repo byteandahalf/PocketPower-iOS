@@ -159,6 +159,7 @@ MSInitialize {
 	FLHookSymbol(Tile::shouldTick, TILE_SHOULDTICK);
 	FLHookSymbol(Item::_vtable, ITEM_VTABLE);
 	FLHookSymbol(Item::items, ITEM_ITEMS);
+	FLHookSymbol(TileItem::_vtable, TILEITEM_VTABLE);
 	FLHookSymbol(TileSource::$setTileAndData, TILESOURCE_SETTILE);
 	FLHookSymbol(TileSource::$getTile, TILESOURCE_GETTILE);
 	FLHookSymbol(TileSource::$getData, TILESOURCE_GETDATA);

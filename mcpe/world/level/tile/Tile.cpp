@@ -29,7 +29,7 @@ Tile* Tile::diode_on;
 
 Tile::Tile(int id, TextureUVCoordinateSet texture, Material* material) {
 	vtable = (void**) malloc(VT_TILE_SIZE);
-	memcpy(vtable, tiles[4]->vtable, VT_TILE_SIZE);
+	memcpy(vtable, Tile::_vtable, VT_TILE_SIZE);
 	replaceable = false;
 	hitbox = AABB(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	tex = texture;
