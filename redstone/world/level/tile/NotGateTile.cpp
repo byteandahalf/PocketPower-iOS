@@ -7,11 +7,14 @@ NotGateTile::NotGateTile(int id, TextureUVCoordinateSet texture) : Tile(id, text
 
     memcpy(vtable, tiles[50]->vtable, VT_TILE_SIZE);
 
-    if(isActive())
+    if(isActive()) {
+    	renderType = 100;
         renderPass = 7;
+    } else {
+    	renderType = 2;
+    }
 
     hitbox.set(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-    renderType = 2;
     destroyTime = 0.0F;
     solid[id] = false;
     lightBlock[id] = 0;

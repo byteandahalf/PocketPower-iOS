@@ -1,5 +1,4 @@
 #include "Tile.h"
-#include "../../../../addresses.h"
 #include "../../item/TileItem.h"
 
 Tile** Tile::tiles;
@@ -52,9 +51,7 @@ Tile::Tile(int id, TextureUVCoordinateSet texture, Material* material) {
 	creativeTab = 1;
 	fancy = false;
 	textureIsotropic = 0;
-	name = "Duuuude";
-
-	new TileItem(id, this);
+	//name = "Duuuude";
 };
 
 void Tile::init() {

@@ -43,17 +43,37 @@ MSHook(bool, TileTessellator$tessellateInWorld, TileTessellator* self, Tile* til
 		return self->tessellateRepeaterInWorld((RepeaterTile*) tile, pos, data);
 	case 17:
 		return self->tessellatePistonArmInWorld((PistonArmTile*) tile, pos, true);
+	case 100:
+		return self->tessellateLitNotGateInWorld((NotGateTile*) tile, pos, data);
 	}
 
 	switch(tile->id) {
 	case 29:
 	case 33:
 		return self->tessellatePistonBaseInWorld((PistonBaseTile*) tile, pos, false);
-	case 76:
-		return self->tessellateLitNotGateInWorld((NotGateTile*) tile, pos, data);
 	}
 
 	return _TileTessellator$tessellateInWorld(self, tile, pos, data, b);
+}
+
+void initTileItems() {
+	new TileItem(55, Tile::redstoneDust);
+	new TileItem(69, Tile::lever);
+	new TileItem(70, Tile::plateStone);
+	new TileItem(72, Tile::plateWood);
+	new TileItem(147, Tile::plateGold);
+	new TileItem(148, Tile::plateIron);
+	new TileItem(75, Tile::notGate_off);
+	new TileItem(76, Tile::notGate_on);
+	new TileItem(77, Tile::buttonStone);
+	new TileItem(143, Tile::buttonWood);
+	new TileItem(123, Tile::lamp_off);
+	new TileItem(124, Tile::lamp_on);
+	new TileItem(93, Tile::diode_off);
+	new TileItem(94, Tile::diode_on);
+	new TileItem(33, Tile::pistonNormal);
+	new TileItem(29, Tile::pistonSticky);
+	new TileItem(34, Tile::pistonArm);
 }
 
 MSHook(void, Tile$initTiles) {
@@ -84,6 +104,7 @@ MSHook(void, Tile$initTiles) {
 
 MSHook(void, Item$initItems) {
     _Item$initItems();
+    initTileItems();
 
     Item::repeater = new RepeaterItem(356);
 }

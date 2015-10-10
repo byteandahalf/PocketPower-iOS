@@ -44,7 +44,6 @@ struct TileID {
 
 class FullTile {
 public:
-
 	TileID id;
 	DataID data;
 

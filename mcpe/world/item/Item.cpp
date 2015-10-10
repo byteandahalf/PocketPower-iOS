@@ -1,5 +1,4 @@
 #include "Item.h"
-#include "../../../addresses.h"
 
 Item** Item::items;
 std::vector<ItemInstance>* Item::creativeList;
@@ -9,7 +8,7 @@ Item* Item::repeater;
 Item::Item(int id) {
     vtable = (void**) malloc(VT_ITEM_SIZE);
     memcpy(vtable, items[318]->vtable, VT_ITEM_SIZE);
-    memcpy(this->atlas, items[318]->atlas, 24);
+    memcpy(this->atlas, items[318]->atlas, SIZEOF_STRING);
     maxStackSize = 64;
     //atlas = "items-opaque.png";
     frameCount = 1;

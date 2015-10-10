@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "../../../world/phys/AABB.h"
 #include "../../../client/renderer/texture/TextureUVCoordinateSet.h"
+#include "../../../../addresses.h"
 class Material;
 class Random;
 
@@ -41,7 +42,7 @@ public:
     int creativeTab;
     bool fancy;
     unsigned int textureIsotropic;
-    std::string name;
+    char name[SIZEOF_STRING];
 
     static Tile* redstoneDust;
     static Tile* pistonNormal;

@@ -5,7 +5,6 @@ class TileSource;
 class Level;
 
 #define ENTITY_SYNCHEDDATA FLArch(20, 20, 40)
-#define ENTITY_FILLER FLArch(8, 8, 12)
 
 class Entity {
 public:
@@ -14,7 +13,7 @@ public:
 	float x;
 	float y;
 	float z;
-	char filler[ENTITY_FILLER];
+	char filler[12];
 	TileSource& region;
 	int added;
 	int idk;
