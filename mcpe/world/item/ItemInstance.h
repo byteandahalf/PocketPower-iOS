@@ -1,6 +1,6 @@
 #pragma once
-#include "Item.h"
 class Tile;
+class Item;
 
 struct ItemInstance {
 	short count, data;
@@ -10,6 +10,6 @@ struct ItemInstance {
 	int idk;
 
 	ItemInstance(Item* item, short count, short data) : count(count), data(data), item(item) {}
-	ItemInstance(int id, short count, short data) : count(count), data(data), item(Item::items[id]) {}
+	ItemInstance(Tile* tile, short count, short data) : count(count), data(data), tile(tile) {}
 	ItemInstance(const ItemInstance& i) : count(i.count), data(i.data), tag(i.tag), item(i.item), tile(i.tile), idk(i.idk) {}
 };

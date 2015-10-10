@@ -1,6 +1,5 @@
 #include "Tile.h"
 #include "../../item/TileItem.h"
-#include "../../item/ItemInstance.h"
 
 Tile** Tile::tiles;
 bool* Tile::solid;

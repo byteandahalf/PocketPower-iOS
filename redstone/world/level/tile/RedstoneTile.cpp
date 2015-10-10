@@ -1,7 +1,9 @@
 #include "RedstoneTile.h"
+#include "../../../../mcpe/world/item/Item.h"
 #include "../../../../mcpe/world/level/TileSource.h"
 #include "../../../../mcpe/world/level/TilePos.h"
 #include "../../../../mcpe/world/entity/player/Player.h"
+#include "../../../../mcpe/world/item/ItemInstance.h"
 #include "../../../../mcpe/CommonTypes.h"
 #include "../../../../addresses.h"
 
@@ -31,7 +33,7 @@ void RedstoneTile::initVtable() {
     vtable[VT_TILE_GETSIGNAL] = (void*) &getSignal;
     vtable[VT_TILE_SURVIVES] = (void*) &canSurvive;
     vtable[VT_TILE_MAYPLACE] = (void*) &mayPlace;
-    vtable[VT_TILE_GETRESOURCE] = (void*) &getResource;
+    vtable[VT_TILE_RESOURCE] = (void*) &getResource;
 }
 
 bool RedstoneTile::canSurvive(RedstoneTile* self, TileSource* region, int x, int y, int z) {
@@ -164,7 +166,7 @@ void RedstoneTile::recalculate(TileSource* region, int x, int y, int z) {
 void RedstoneTile::neighborChanged(RedstoneTile* self, TileSource* region, int x, int y, int z, int xx, int yy, int zz) {
     if(!canSurvive(self, region, x, y, z)) {
         region->setTileAndData(x, y, z, 0, 0, 3);
-        popResource(region, x, y, z, ItemInstance(self->getResource(), 1, 0));
+        self->popResource(region, x, y, z, ItemInstance(Item::items[self->getResource()], 1, 0));
         return;
     }
 

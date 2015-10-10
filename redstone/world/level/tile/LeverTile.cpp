@@ -1,6 +1,7 @@
 #include "LeverTile.h"
 #include "../../../../mcpe/client/renderer/texture/TextureUVCoordinateSet.h"
 #include "../../../../mcpe/world/level/TileSource.h"
+#include "../../../../mcpe/world/item/ItemInstance.h"
 #include "../../../../mcpe/world/entity/player/Player.h"
 #include "../../../../mcpe/world/entity/Mob.h"
 #include "../../../../mcpe/world/phys/AABB.h"
@@ -144,7 +145,7 @@ bool LeverTile::canSurvive(LeverTile* self, TileSource* region, int x, int y, in
 void LeverTile::neighborChanged(LeverTile* self, TileSource* region, int x, int y, int z, int newX, int newY, int newZ) {
 	if(!canSurvive(self, region, x, y, z)) {
 		region->setTileAndData(x, y, z, 0, 0, 3);
-		popResource(region, x, y, z, ItemInstance(self->id, 1, 0));
+		self->popResource(region, x, y, z, ItemInstance(self, 1, 0));
 		region->scheduleBlockUpdate(x, y, z, self->id, 0);
 	}
 }

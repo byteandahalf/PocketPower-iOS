@@ -7,7 +7,7 @@
 #include "../../../../addresses.h"
 class Material;
 class Random;
-class ItemInstance;
+struct ItemInstance;
 class TileSource;
 
 class Tile {
