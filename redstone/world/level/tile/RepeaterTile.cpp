@@ -84,6 +84,7 @@ int RepeaterTile::getDirectSignal(RepeaterTile* self, TileSource* region, int x,
 void RepeaterTile::neighborChanged(RepeaterTile* self, TileSource* region, int x, int y, int z, int changedX, int changedY, int changedZ) {
     if(!mayPlace(self, region, x, y, z)) {
         region->setTileAndData(x, y, z, 0, 0, 3);
+        popResource(region, x, y, z, ItemInstance(self->getResource(), 1, 0));
         return;
     }
 

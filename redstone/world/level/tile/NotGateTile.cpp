@@ -34,6 +34,7 @@ void NotGateTile::initVtable() {
     vtable[VT_TILE_TICK] = (void*) &tick;
     vtable[VT_TILE_ANIMATE] = (void*) &addCollisionShapes;
     vtable[VT_TILE_SURVIVES] = (void*) &canSurvive;
+    vtable[VT_TILE_GETRESOURCE] = (void*) &getResource;
 }
 
 bool NotGateTile::isActive() {
@@ -88,8 +89,10 @@ void NotGateTile::onRemove(NotGateTile* self, TileSource* region, int x, int y, 
 }
 
 void NotGateTile::neighborChanged(NotGateTile* self, TileSource* region, int x, int y, int z, int xx, int yy, int zz) {
-    if(!canSurvive(self, region, x, y, z))
+    if(!canSurvive(self, region, x, y, z)) {
         region->setTileAndData(x, y, z, 0, 0, 0);
+        popResource(region, x, y, z, ItemInstance(self->getResource(), 1, 0));
+    }
     region->scheduleBlockUpdate(x, y, z, self->id, 2);
 }
 
@@ -114,6 +117,10 @@ bool NotGateTile::checkForBurnout(TileSource* region, int x, int y, int z) {
     if(data == 4 && region->getIndirectPowerOutput(x, y, z + 1, 3)) return true;
     if(data == 1 && region->getIndirectPowerOutput(x - 1, y, z, 4)) return true;
     return data == 2 && region->getIndirectPowerOutput(x + 1, y, z, 5);
+}
+
+int NotGateTile::getResource() {
+    return 76;
 }
 
 void NotGateTile::addCollisionShapes() {}

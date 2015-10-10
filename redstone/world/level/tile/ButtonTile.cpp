@@ -105,6 +105,7 @@ const AABB& ButtonTile::getVisualShapeInWorld(ButtonTile* self, TileSource* regi
 void ButtonTile::neighborChanged(ButtonTile* self, TileSource* region, int x, int y, int z, int newX, int newY, int newZ) {
 	if(!canSurvive(self, region, x, y, z)) {
 		region->setTileAndData(x, y, z, 0, 0, 3);
+		popResource(region, x, y, z, ItemInstance(self->id, 1, 0));
 		region->scheduleBlockUpdate(x, y, z, self->id, 0);
 	}
 }

@@ -24,6 +24,7 @@ public:
     static void playerDestroy(RedstoneTile*, Player*, int, int, int);
     static bool canSurvive(RedstoneTile*, TileSource*, int, int, int);
     static bool mayPlace(RedstoneTile*, TileSource*, int, int, int);
+    static int getResource();
 
     void initVtable();
 };

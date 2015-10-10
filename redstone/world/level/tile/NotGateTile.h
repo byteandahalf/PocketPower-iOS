@@ -18,6 +18,7 @@ public:
     static void onPlace(NotGateTile*, TileSource*, int, int, int);
     static void onRemove(NotGateTile*, TileSource*, int, int, int);
     static bool canSurvive(NotGateTile*, TileSource*, int, int, int);
+    static int getResource();
 
     void initVtable();
 };

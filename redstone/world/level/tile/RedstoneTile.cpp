@@ -31,6 +31,7 @@ void RedstoneTile::initVtable() {
     vtable[VT_TILE_GETSIGNAL] = (void*) &getSignal;
     vtable[VT_TILE_SURVIVES] = (void*) &canSurvive;
     vtable[VT_TILE_MAYPLACE] = (void*) &mayPlace;
+    vtable[VT_TILE_GETRESOURCE] = (void*) &getResource;
 }
 
 bool RedstoneTile::canSurvive(RedstoneTile* self, TileSource* region, int x, int y, int z) {
@@ -163,6 +164,7 @@ void RedstoneTile::recalculate(TileSource* region, int x, int y, int z) {
 void RedstoneTile::neighborChanged(RedstoneTile* self, TileSource* region, int x, int y, int z, int xx, int yy, int zz) {
     if(!canSurvive(self, region, x, y, z)) {
         region->setTileAndData(x, y, z, 0, 0, 3);
+        popResource(region, x, y, z, ItemInstance(self->getResource(), 1, 0));
         return;
     }
 
@@ -229,6 +231,10 @@ void RedstoneTile::updateWires(TileSource* region, int x, int y, int z) {
     region->updateNeighborsAt(x, y + 1, z, id);
     region->updateNeighborsAt(x, y, z - 1, id);
     region->updateNeighborsAt(x, y, z + 1, id);
+}
+
+int RedstoneTile::getResource() {
+    return 331;
 }
 
 void RedstoneTile::addCollisionShapes() {}

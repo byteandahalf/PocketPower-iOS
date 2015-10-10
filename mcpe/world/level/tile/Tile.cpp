@@ -1,11 +1,13 @@
 #include "Tile.h"
 #include "../../item/TileItem.h"
+#include "../../item/ItemInstance.h"
 
 Tile** Tile::tiles;
 bool* Tile::solid;
 bool* Tile::shouldTick;
 void** Tile::_vtable;
 void (*Tile::$init)(Tile*);
+void (*Tile::$popResource)(Tile*, TileSource*, int, int, int, const ItemInstance&);
 uint8_t* Tile::lightBlock;
 
 Tile* Tile::redstoneDust;
@@ -56,4 +58,8 @@ Tile::Tile(int id, TextureUVCoordinateSet texture, Material* material) {
 
 void Tile::init() {
 	$init(this);
+}
+
+void Tile::popResource(TileSource* region, int x, int y, int z, const ItemInstance& item) {
+	$popResource(this, region, x, y, z, item);
 }
