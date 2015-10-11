@@ -40,7 +40,7 @@ void RepeaterTile::initVtable() {
 }
 
 bool RepeaterTile::mayPlace(RepeaterTile* self, TileSource* region, int x, int y, int z) {
-    return solid[region->getTile(x, y - 1, z).id];
+    return solid[region->getTile(x, y - 1, z).id] && region->getTile(x, y, z).id == 0;
 }
 
 const TextureUVCoordinateSet& RepeaterTile::getTexture(RepeaterTile* self, signed char side, int data) {

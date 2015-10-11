@@ -28,6 +28,7 @@ void PistonArmTile::initVtable() {
 	vtable[VT_TILE_GETSHAPEWORLD] = (void*) &getVisualShapeInWorld;
 	vtable[VT_TILE_NEIGHBORCH] = (void*) &neighborChanged;
 	vtable[VT_TILE_DESTROY] = (void*) &destroy;
+	vtable[VT_TILE_ADDCOLLISION] = (void*) &addCollisionShapes;
 }
 
 void PistonArmTile::destroy(PistonArmTile* self, TileSource* region, int x, int y, int z, int side, Entity* player) {
@@ -92,6 +93,43 @@ const TextureUVCoordinateSet& PistonArmTile::getTexture(PistonArmTile* self, sig
 	if(side == opposite[rotation])
 		return self->tex;
 	return self->texture_side;
+}
+
+bool PistonArmTile::addCollisionShapes(PistonArmTile* self, TileSource& region, int x, int y, int z, AABB const* posAABB, std::vector<AABB>& pool) {
+	int data = region.getData(x, y, z);
+	float var9 = 0.25F;
+	float var10 = 0.375F;
+	float var11 = 0.625F;
+	float var12 = 0.25F;
+	float var13 = 0.75F;
+
+	switch(getRotation(data)) {
+    	case 0:
+    	    pool.push_back(AABB(0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 1.0F).move(x, y, z));
+    	    pool.push_back(AABB(0.375F, 0.25F, 0.375F, 0.625F, 1.0F, 0.625F).move(x, y, z));
+    	    break;
+    	case 1:
+    	    pool.push_back(AABB(0.0F, 0.75F, 0.0F, 1.0F, 1.0F, 1.0F).move(x, y, z));
+    	    pool.push_back(AABB(0.375F, 0.0F, 0.375F, 0.625F, 0.75F, 0.625F).move(x, y, z));
+    	    break;
+    	case 2:
+    	    pool.push_back(AABB(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.25F).move(x, y, z));
+    	    pool.push_back(AABB(0.25F, 0.375F, 0.25F, 0.75F, 0.625F, 1.0F).move(x, y, z));
+    	    break;
+    	case 3:
+    	    pool.push_back(AABB(0.0F, 0.0F, 0.75F, 1.0F, 1.0F, 1.0F).move(x, y, z));
+    	    pool.push_back(AABB(0.25F, 0.375F, 0.0F, 0.75F, 0.625F, 0.75F).move(x, y, z));
+    	    break;
+    	case 4:
+    	    pool.push_back(AABB(0.0F, 0.0F, 0.0F, 0.25F, 1.0F, 1.0F).move(x, y, z));
+    	    pool.push_back(AABB(0.375F, 0.25F, 0.25F, 0.625F, 0.75F, 1.0F).move(x, y, z));
+    	    break;
+    	case 5:
+    	    pool.push_back(AABB(0.75F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F).move(x, y, z));
+    	    pool.push_back(AABB(0.0F, 0.375F, 0.25F, 0.75F, 0.625F, 0.75F).move(x, y, z));
+    	    break;
+    }
+	return true;
 }
 
 int PistonArmTile::getRotation(int data) {
