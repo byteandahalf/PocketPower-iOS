@@ -31,6 +31,7 @@
 #include "redstone/world/level/tile/PistonBaseTile.h"
 #include "redstone/world/level/tile/PistonArmTile.h"
 #include "redstone/world/level/tile/DoorTile.h"
+#include "redstone/world/level/tile/TrapDoorTile.h"
 
 using namespace std;
 
@@ -83,6 +84,7 @@ MSHook(void, Tile$initTiles) {
 	TntTile::initVtable((TntTile*) Tile::tiles[46]);
 	((RedstoneBlockTile*) Tile::tiles[152])->initVtable();
 	((DoorTile*) Tile::tiles[64])->initVtable();
+	((TrapDoorTile*) Tile::tiles[96])->initVtable();
 
 	Tile::redstoneDust = new RedstoneTile(55);
 	Tile::lever = new LeverTile(69);

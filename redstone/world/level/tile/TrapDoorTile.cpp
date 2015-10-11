@@ -27,8 +27,8 @@ void TrapDoorTile::neighborChanged(TrapDoorTile* self, TileSource* region, int x
 
 void TrapDoorTile::setOpen(TileSource* region, int x, int y, int z, bool open) {
 	int data = region->getData(x, y, z);
-	bool isOpen = (data & 4) > 0;
+	bool isOpen = (data & 8) > 0;
 
 	if(isOpen != open)
-		region->setTileAndData(x, y, z, id, data ^ 4, 2);
+		region->setTileAndData(x, y, z, id, data ^ 8, 2);
 }
