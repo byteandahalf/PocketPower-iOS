@@ -175,7 +175,6 @@ MSInitialize {
 	FLHookSymbol(TileTickingQueue::$add, TICKQUEUE_ADD);
 	FLHookSymbol(Item::creativeList, ITEM_CREATIVELIST);
 	FLHookSymbol(DoorTile::$setOpen, DOORTILE_SETOPEN);
-	FLHookSymbol(TrapDoorTile::setOpen, TRAPDOOR_SETOPEN);
 
 	FLHookFunction(TILETESS_TESS, MSHake(TileTessellator$tessellateInWorld));
 	FLHookFunction(TILE_INITTILES, MSHake(Tile$initTiles));
