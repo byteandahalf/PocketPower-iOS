@@ -10,5 +10,5 @@ public:
 	void initVtable();
 
 private:
-	void setOpen(TrapDoorTile*, TileSource*, int, int, int, bool);
+	void setOpen(TileSource*, int, int, int, bool);
 };
