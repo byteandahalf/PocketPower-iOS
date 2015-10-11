@@ -91,8 +91,8 @@ void NotGateTile::onRemove(NotGateTile* self, TileSource* region, int x, int y, 
 
 void NotGateTile::neighborChanged(NotGateTile* self, TileSource* region, int x, int y, int z, int xx, int yy, int zz) {
     if(!canSurvive(self, region, x, y, z)) {
-	region->setTileAndData(x, y, z, 0, 0, 0);
-	self->popResource(region, x, y, z, ItemInstance(tiles[self->getResource()], 1, 0));
+		region->setTileAndData(x, y, z, 0, 0, 0);
+		//self->popResource(region, x, y, z, ItemInstance(tiles[self->getResource()], 1, 0));
     }
     region->scheduleBlockUpdate(x, y, z, self->id, 2);
 }

@@ -54,7 +54,7 @@ bool PressurePlateTile::mayPlace(PressurePlateTile* self, TileSource* region, in
 void PressurePlateTile::neighborChanged(PressurePlateTile* self, TileSource* region, int x, int y, int z, int newX, int newY, int newZ) {
 	if(!mayPlace(self, region, x, y, z)) {
 		region->setTileAndData(x, y, z, 0, 0, 3);
-		self->popResource(region, x, y, z, ItemInstance(self, 1, 0));
+		//self->popResource(region, x, y, z, ItemInstance(self, 1, 0));
 		region->scheduleBlockUpdate(x, y, z, self->id, 0);
 	}
 }

@@ -21,6 +21,6 @@ void FenceGateTile::neighborChanged(FenceGateTile* self, TileSource* region, int
 	}
 }
 
-bool FenceGateTile::isOpen(int) {
+bool FenceGateTile::isOpen(int data) {
 	return (data & 4) > 0;
 }

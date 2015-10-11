@@ -1,5 +1,6 @@
 #pragma once
 #include "../../../../mcpe/world/level/tile/Tile.h"
+#include "PistonPushInfo.h"
 class TileSource;
 class Mob;
 
@@ -26,12 +27,13 @@ private:
 	TextureUVCoordinateSet texture_side;
 	bool sticky;
 
-	static bool isMoveableBlock(Tile*, TileSource*, int, int, int, bool);
 	static bool canPushRow(TileSource*, int, int, int, int);
 	bool actuallyPushRow(TileSource*, int, int, int, int);
 	void pushEntities(TileSource*, int, int, int, int, int, int);
 	bool hasPower(TileSource*, int, int, int, int);
 	void updateState(TileSource*, int, int, int);
+
+	static PistonPushInfo getPushInfoFor(TileSource*, int, int, int);
 
 	void initVtable();
 };
