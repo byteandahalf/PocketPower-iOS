@@ -21,7 +21,7 @@ bool RepeaterItem::useOn(RepeaterItem* self, ItemInstance* item, Player* player,
 	x += Facing::STEP_X[side], y += Facing::STEP_Y[side], z += Facing::STEP_Z[side];
 	int data = RepeaterTile::getPlacementDataValue((RepeaterTile*) Tile::diode_off, player, x, y, z, side);
 
-	if(RepeaterTile::mayPlace((RepeaterTile*) Tile::diode_off, &player->region, x, y, z))
+	if(player->region.getTile(x, y, z).id == 0 && RepeaterTile::mayPlace((RepeaterTile*) Tile::diode_off, &player->region, x, y, z))
 		player->region.setTileAndData(x, y, z, Tile::diode_off->id, data, 2);
 	return true;
 }
