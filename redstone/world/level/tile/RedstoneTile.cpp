@@ -5,6 +5,7 @@
 #include "../../../../mcpe/world/entity/player/Player.h"
 #include "../../../../mcpe/world/item/ItemInstance.h"
 #include "../../../../mcpe/CommonTypes.h"
+#include "../../../../mcpe/world/Facing.h"
 #include "../../../../addresses.h"
 
 #include "RedstoneColors.h"
@@ -217,8 +218,8 @@ bool RedstoneTile::canRedstoneConnect(TileSource* region, int x, int y, int z, i
     if(id == this->id) return true;
     if(id == 0) return false;
     if(id == 93 || id == 94) {
-        int data = getData(x, y, z);
-        return side == data & 3 || side == Facing::OPPOSITE_FACING[data & 3];
+        int data = region->getData(x, y, z);
+        return side == (data & 3) || side == Facing::ROTATE_OPPOSITE[data & 3];
     }
     bool (*isSignalSource)(Tile*) = (bool (*)(Tile*)) tiles[id]->vtable[VT_TILE_ISSOURCE];
     return isSignalSource(tiles[id]) && side != -1;
