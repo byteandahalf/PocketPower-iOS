@@ -13,7 +13,7 @@ class Tile;
 class Tessellator;
 class TileSource;
 
-#define TILETESS_FILLER FLArch(520, 520, 1044)
+#define TILETESS_FILLER FLArch(520, 1044)
 
 class TileTessellator {
 public:

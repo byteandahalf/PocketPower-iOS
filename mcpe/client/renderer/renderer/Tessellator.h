@@ -3,7 +3,7 @@
 #include <vector>
 #include "../../../../vfp.h"
 
-#define TESS_FILLER FLArch(100, 100, 140)
+#define TESS_FILLER FLArch(100, 140)
 
 class Tessellator {
 public:

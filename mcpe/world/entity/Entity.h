@@ -4,7 +4,7 @@
 class TileSource;
 class Level;
 
-#define ENTITY_SYNCHEDDATA FLArch(20, 20, 40)
+#define ENTITY_SYNCHEDDATA FLArch(20, 40)
 
 class Entity {
 public:

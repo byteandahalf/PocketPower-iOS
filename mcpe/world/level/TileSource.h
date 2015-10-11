@@ -8,7 +8,7 @@ class LevelChunk;
 struct AABB;
 struct TileTickingQueue;
 
-#define TILESOURCE_FILLER FLArch(36, 36, 72)
+#define TILESOURCE_FILLER FLArch(36, 72)
 
 class TileSource {
 public:
