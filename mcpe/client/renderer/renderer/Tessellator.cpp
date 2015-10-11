@@ -1,6 +1,6 @@
 #include "Tessellator.h"
 
-void (*Tessellator::$vertex)(Tessellator*, float, float, float);
+void (*Tessellator::$vertex)(Tessellator*, float, float, float) AAPCS_VFP;
 
 void Tessellator::vertexUV(float x, float y, float z, float u, float v) {
 	this->u = u;
