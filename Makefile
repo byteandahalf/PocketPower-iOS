@@ -4,10 +4,13 @@ PROJECT := pocketpower
 # Name of process the tweak is loaded into
 PROCESS := minecraftpe
 
-# Build using libc++ and C++11 support
-# Unfortunately these build parameters are set up just for me :(
-override CXXFLAGS += -stdlib=libstdc++ -std=c++11 -miphoneos-version-min=5.0 -isysroot /iPhoneOS8.1.sdk
-override LDFLAGS += -stdlib=libstdc++ -lc++ -lsubstrate -isysroot /iPhoneOS8.1.sdk
+# Directory of the iOS SDK on MacOS
+SDKROOT := /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk
+
+# Build using libc++ and C++11 support (for 12/24-byte strings and vectors)
+# This should be build on a Mac, since the iOS build environment does not work correctly when linking to libc++
+override CXXFLAGS += -stdlib=libc++ -std=c++11 -miphoneos-version-min=7.0 -isysroot $(SDKROOT)
+override LDFLAGS += -stdlib=libc++ -isysroot $(SDKROOT)
 
 
 # Names of the tweak library, substrate filter, and debian package
@@ -30,7 +33,7 @@ OBJS := $(addprefix $(BUILD)/,$(SRCS:.cpp=.o))
 ARCHS := armv7 arm64
 ARCHFLAGS := $(addprefix -arch ,$(ARCHS))
 # Frameworks for linking
-FRAMEWORKS := Forklift
+FRAMEWORKS := CydiaSubstrate Forklift
 override LDFLAGS += $(addprefix -framework ,$(FRAMEWORKS))
 
 # Compiler and linker
