@@ -1,6 +1,9 @@
-#include <substrate.h>
+// framework includes
+#include <CydiaSubstrate/CydiaSubstrate.h>
 #include <Forklift/Forklift.h>
+// standard includes
 #include <string>
+// local includes
 #include "addresses.h" 
 
 #include "mcpe/client/renderer/tile/TileTessellator.h"
