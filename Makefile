@@ -10,7 +10,7 @@ SDKROOT := /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platfor
 # Build using libc++ and C++11 support (for 12/24-byte strings and vectors)
 # This should be build on a Mac, since the iOS build environment does not work correctly when linking to libc++
 override CXXFLAGS += -stdlib=libc++ -std=c++11 -miphoneos-version-min=7.0 -isysroot $(SDKROOT)
-override LDFLAGS += -stdlib=libc++ -isysroot $(SDKROOT)
+override LDFLAGS += -stdlib=libc++ -std=c++11 -miphoneos-version-min=7.0 -isysroot $(SDKROOT)
 
 
 # Names of the tweak library, substrate filter, and debian package

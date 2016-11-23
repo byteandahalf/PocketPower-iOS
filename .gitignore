@@ -1,4 +1,5 @@
-build
-layout
+.DS_Store
+build/
+layout/
 *.deb
 *.dylib
