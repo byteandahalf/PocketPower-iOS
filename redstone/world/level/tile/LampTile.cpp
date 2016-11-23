@@ -3,13 +3,12 @@
 #include "../../../../mcpe/world/level/TileSource.h"
 #include "../../../../addresses.h"
 
-LampTile::LampTile(int blockId, TextureUVCoordinateSet texture) : Tile(blockId, texture, tiles[1]->material) {
+LampTile::LampTile(int blockId, TextureUVCoordinateSet texture) : Tile(blockId, texture, tiles[1]->material, "redstoneLamp") {
 	init();
 
 	Tile* (*setLightEmission)(Tile*, float) = (Tile* (*)(Tile*, float)) vtable[VT_TILE_SETEMISSION];
 	if(isLit()) setLightEmission(this, 1.0F);
 	creativeTab = 4;
-	//setNameId("redstoneLight");
 	destroyTime = 0.3F;
 	soundType = tiles[20]->soundType;
 

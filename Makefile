@@ -4,6 +4,9 @@ PROJECT := pocketpower
 # Name of process the tweak is loaded into
 PROCESS := minecraftpe
 
+# Local IP Address of device to SSH into
+DEVICEIP := 192.168.1.5
+
 # Directory of the iOS SDK on MacOS
 SDKROOT := /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk
 
@@ -94,7 +97,7 @@ $(DEB): $(TWEAK) $(FILTER)
 	$(_v)chmod 0755 $(SUBSTRATE)/$(TWEAK)
 	$(_v)chmod 0644 $(SUBSTRATE)/$(FILTER)
 	@echo 'Package $@'
-	$(_v)dpkg-deb -b $(STAGING) $@
+	$(_v)dpkg-deb -Zgzip -b $(STAGING) $@
 	$(_v)rm -rf $(STAGING)
 
 
@@ -102,9 +105,9 @@ $(DEB): $(TWEAK) $(FILTER)
 
 install: $(DEB)
 	@echo 'Install $(DEB)'
-	$(_v)dpkg -i $<
-	@echo 'Kill $(PROCESS)'
-	$(_v)killall -KILL $(PROCESS)
+	scp $(DEB) root@$(DEVICEIP):/var/tmp/
+	@echo ‘Run dpkg -i /var/tmp/$(DEB) to install.’
+	ssh root@$(DEVICEIP)
 
 .PHONY: install
 

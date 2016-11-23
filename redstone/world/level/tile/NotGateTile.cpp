@@ -3,16 +3,16 @@
 #include "../../../../mcpe/world/level/TileSource.h"
 #include "../../../../mcpe/world/item/ItemInstance.h"
 
-NotGateTile::NotGateTile(int id, TextureUVCoordinateSet texture) : Tile(id, texture, tiles[50]->material) {
+NotGateTile::NotGateTile(int id, TextureUVCoordinateSet texture) : Tile(id, texture, tiles[50]->material, "notGate") {
     init();
 
     memcpy(vtable, tiles[50]->vtable, VT_TILE_SIZE);
 
     if(isActive()) {
-	renderType = 100;
-	renderPass = 7;
+	   renderType = 100;
+	   renderPass = 7;
     } else {
-	renderType = 2;
+	   renderType = 2;
     }
 
     hitbox.set(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);

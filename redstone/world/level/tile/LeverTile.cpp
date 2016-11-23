@@ -8,7 +8,7 @@
 #include "../../../../addresses.h"
 
 
-LeverTile::LeverTile(int blockId) : Tile(blockId, TextureUVCoordinateSet(0.25F, 0.375F, 0.2812F, 0.4375F), tiles[50]->material) {
+LeverTile::LeverTile(int blockId) : Tile(blockId, TextureUVCoordinateSet(0.25F, 0.375F, 0.2812F, 0.4375F), tiles[50]->material, "lever") {
 	init();
 
 	solid[id] = false;

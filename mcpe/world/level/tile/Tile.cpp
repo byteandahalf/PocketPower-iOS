@@ -28,7 +28,7 @@ Tile* Tile::diode_off;
 Tile* Tile::diode_on;
 
 
-Tile::Tile(int id, TextureUVCoordinateSet texture, Material* material) {
+Tile::Tile(int id, TextureUVCoordinateSet texture, Material* material, const std::string& name) {
 	vtable = (void**) malloc(VT_TILE_SIZE);
 	memcpy(vtable, Tile::_vtable, VT_TILE_SIZE);
 	replaceable = false;
@@ -52,7 +52,7 @@ Tile::Tile(int id, TextureUVCoordinateSet texture, Material* material) {
 	creativeTab = 1;
 	fancy = false;
 	textureIsotropic = 0;
-	//name = "Duuuude";
+	this->name = name;
 };
 
 void Tile::init() {

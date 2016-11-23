@@ -7,7 +7,7 @@
 class Random;
 
 
-ButtonTile::ButtonTile(int id, TextureUVCoordinateSet texture, Material* material) : Tile(id, texture, material) {
+ButtonTile::ButtonTile(int id, TextureUVCoordinateSet texture, Material* material) : Tile(id, texture, material, "button") {
 	init();
 
 	Tile::solid[id] = false;

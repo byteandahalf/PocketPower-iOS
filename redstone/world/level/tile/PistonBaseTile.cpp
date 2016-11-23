@@ -9,15 +9,15 @@
 #include <algorithm>
 
 
-PistonBaseTile::PistonBaseTile(int blockId, bool sticky) : Tile(blockId, TextureUVCoordinateSet(0.0F, 0.0F, 0.0625F, 0.0625F), tiles[1]->material) {
+PistonBaseTile::PistonBaseTile(int blockId, bool sticky) : Tile(blockId, TextureUVCoordinateSet(0.0F, 0.0F, 0.0625F, 0.0625F), tiles[1]->material, "piston") {
 	init();
 
 	if(!sticky) {
-		//setNameId("piston");
+		name = "piston";
 		tex = TextureUVCoordinateSet(0.6563F, 0.375F, 0.6875F, 0.4375F);
 	}
 	else {
-		//setNameId("piston_sticky");
+		name = "piston_sticky";
 		tex = TextureUVCoordinateSet(0.625F, 0.375F, 0.6562F, 0.4375F);
 	}
 

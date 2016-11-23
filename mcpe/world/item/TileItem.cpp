@@ -4,7 +4,7 @@
 
 void** TileItem::_vtable;
 
-TileItem::TileItem(int id, Tile* parent) : Item(id) {
+TileItem::TileItem(int id, Tile* parent) : Item(id, parent->name) {
     memcpy(vtable, items[20]->vtable, VT_ITEM_SIZE);
     parentId = parent->id;
 }

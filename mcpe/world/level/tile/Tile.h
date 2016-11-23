@@ -12,7 +12,7 @@ class TileSource;
 
 class Tile {
 public:
-	Tile(int, TextureUVCoordinateSet, Material*);
+	Tile(int, TextureUVCoordinateSet, Material*, const std::string&);
 	void init();
 	void popResource(TileSource*, int, int, int, const ItemInstance&);
 
@@ -46,7 +46,7 @@ public:
 	int creativeTab;
 	bool fancy;
 	unsigned int textureIsotropic;
-	char name[SIZEOF_STRING];
+	std::string name;
 
 	static Tile* redstoneDust;
 	static Tile* pistonNormal;

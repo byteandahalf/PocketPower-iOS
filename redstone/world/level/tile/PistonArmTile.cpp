@@ -6,11 +6,10 @@
 #include "../../../../mcpe/world/phys/AABB.h"
 #include "../../../../addresses.h"
 
-PistonArmTile::PistonArmTile(int blockId) : Tile(blockId, TextureUVCoordinateSet(0.0F, 0.0F, 0.0625F, 0.0625F), tiles[1]->material) {
+PistonArmTile::PistonArmTile(int blockId) : Tile(blockId, TextureUVCoordinateSet(0.0F, 0.0F, 0.0625F, 0.0625F), tiles[1]->material, "piston_extension") {
 	init();
 	
 	destroyTime = 0.5F;
-	//setNameId("piston_extension");
 	renderType = 17;
 	creativeTab = 4;
 	Tile::solid[blockId] = false;

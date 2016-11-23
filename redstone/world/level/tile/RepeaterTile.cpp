@@ -11,7 +11,7 @@
 float RepeaterTile::torchOffset[4] = {-0.0625F, 0.0625F, 0.1875F, 0.3125F};
 int RepeaterTile::delaySettings[4] = {1, 2, 3, 4};
 
-RepeaterTile::RepeaterTile(int blockId, TextureUVCoordinateSet texture, bool powered) : Tile(blockId, texture, tiles[50]->material) {
+RepeaterTile::RepeaterTile(int blockId, TextureUVCoordinateSet texture, bool powered) : Tile(blockId, texture, tiles[50]->material, "repeater") {
     init();
 
     side_texture = TextureUVCoordinateSet(0.625F, 0.0625F, 0.6562F, 0.125F);

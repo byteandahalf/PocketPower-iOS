@@ -6,7 +6,7 @@
 #include "../level/tile/RepeaterTile.h"
 #include "../../../addresses.h"
 
-RepeaterItem::RepeaterItem(int itemId) : Item(itemId) {
+RepeaterItem::RepeaterItem(int itemId) : Item(itemId, "repeater") {
 	creativeTab = 4;
 	icon = TextureUVCoordinateSet(0.0625F, 0.2188F, 0.0937F, 0.25F);
 

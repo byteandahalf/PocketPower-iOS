@@ -14,16 +14,16 @@ public:
 
     static Item* repeater;
 
-    Item(int);
+    Item(int, const std::string&);
 
     static void addCreativeItem(Item*, short);
 
     void** vtable; // 0
     long maxStackSize; // 8
-    char atlas[SIZEOF_STRING]; // 16
+    std::string atlas; // 16
     int frameCount; // 40
     int animates; // 44
-    char name[SIZEOF_STRING]; // 48
+    std::string name; // 48
     short id; // 72
     short maxDamage; // 74
     TextureUVCoordinateSet icon; // 76

@@ -10,7 +10,7 @@
 
 #include "RedstoneColors.h"
 
-RedstoneTile::RedstoneTile(int id) : Tile(id, TextureUVCoordinateSet(0.125, 0.5, 0.1562, 0.5625), tiles[50]->material) {
+RedstoneTile::RedstoneTile(int id) : Tile(id, TextureUVCoordinateSet(0.125, 0.5, 0.1562, 0.5625), tiles[50]->material, "redstone_dust") {
     init();
 
     solid[id] = false;

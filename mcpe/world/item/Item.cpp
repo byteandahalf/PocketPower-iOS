@@ -6,13 +6,11 @@ std::vector<ItemInstance>* Item::creativeList;
 
 Item* Item::repeater;
 
-Item::Item(int id) {
+Item::Item(int id, const std::string& name) {
     vtable = (void**) malloc(VT_ITEM_SIZE);
     memcpy(vtable, Item::_vtable, VT_ITEM_SIZE);
-    if(id > 255)
-        memcpy(this->atlas, items[318]->atlas, SIZEOF_STRING);
     maxStackSize = 64;
-    //atlas = "items-opaque.png";
+    atlas = "items-opaque.png";
     frameCount = 1;
     animates = 1;
     this->id = id;
@@ -23,7 +21,7 @@ Item::Item(int id) {
     renderAsSword = false;
     isStackedByData = false;
     craftingRemainingItem = this;
-    //name = "New item";
+    this->name = name;
 
     items[id] = this;
 }

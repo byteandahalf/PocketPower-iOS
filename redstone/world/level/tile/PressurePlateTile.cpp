@@ -4,7 +4,7 @@
 #include "../../../../mcpe/world/item/ItemInstance.h"
 #include "../../../../addresses.h"
 
-PressurePlateTile::PressurePlateTile(int blockId, TextureUVCoordinateSet texture, Material* material) : Tile(blockId, texture, material) {
+PressurePlateTile::PressurePlateTile(int blockId, TextureUVCoordinateSet texture, Material* material) : Tile(blockId, texture, material, "pressurePlate") {
 	init();
 
 	hitbox.set(0.0625F, 0.0F, 0.0625F, 1.0F - 0.0625F, 0.0625F, 1.0F - 0.0625F);
@@ -14,7 +14,6 @@ PressurePlateTile::PressurePlateTile(int blockId, TextureUVCoordinateSet texture
 	destroyTime = 0.5F;
 	creativeTab = 4;
 	//setTicking(true);
-	//setNameId(name);
 
 	initVtable();
 }
